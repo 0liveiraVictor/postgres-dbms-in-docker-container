@@ -15,15 +15,45 @@ O Postgres é um Sistema de Gerenciamento de Banco de Dados (SGBD) objeto-relaci
 
 Nesse tutorial, você aprenderá a realizar a instalação de uma instância Postgres em um ambiente desejado, utilizando a tecnologia Docker e aprendendo seus conceitos envolvidos, tais como: imagem, container, volume e um pouco sobre DockerHub. Adicionalmente, a instalação da ferramenta gráfica de gerenciamento do Postgres, o pgadmin, também será abordada.
 
-## O que é o Docker?
+## Visão Geral da Plataforma Docker
 
-### Porque instalar o Postgres usando o Docker?
+O [Docker](https://www.docker.com/) é uma plataforma de software projetada para facilitar a criação, teste, distribuição e implantação de aplicativos de forma ágil. Ele organiza o software em uma estrutura denominada contêiner, que é a unidade padronizada que contém todos os elementos necessários para sua execução, tais como: bibliotecas, ferramentas do sistema, código e ambiente de execução. Com o Docker, é possível (de forma rápida e fácil) distribuir e implementar softwares em qualquer ambiente, escalando suas aplicações conforme a demanda e garantindo seu bom funcionamento.
 
-### O que é uma imagem?
+### Porque Instalar o Postgres Usando o Docker?
 
-### O que é um container?
+### O que é uma Imagem Docker?
 
-### O que é um volume?
+Uma imagem Docker é um pacote leve que contém tudo que é necessário para execução de um software. O pacote da imagem é um conjunto de arquivos empacotados, organizados em camadas, que representam o sistema de arquivos necessário para executar um aplicativo. Para que se possa executar uma aplicação, sob o contexto Docker, é necessário utilizar uma imagem para a construção da instância na qual essa aplicação será executada; a essa instância, denomina-se o termo 'container'. Então, por lógica, todo container docker possui uma imagem base que o gerou.
+
+As imagens Docker podem ser escritas em um arquivo chamado 'Dockerfile'. A imagem pode ser construídas totalmente do zero ou utilizar outras imagens docker como base para construção de sua própria imagem. De modo geral as principais caracteristicas de uma imagem são:
+
+- **Sistema de arquivos base**: i.e. podendo ser uma distribuição Linux, como Ubuntu, Alpine ou CentOS;
+- **Código**: código fonte do aplicativo que será executado;
+- **Configurações**: i.e variáveis de ambiente e/ou comandos iniciais para instruções de execução;
+- **Dependências do aplicativo**: bibliotecas, pacotes e outras dependências que o software precisar;
+
+Para facilitar o compartilhamento e a reutilização das imagens, elas podem ser armazenadas em repositórios. Em especial, o [DockerHub](https://hub.docker.com/) é o repositório oficial Docker, mantido pela Docker, no qual você pode gerenciar, subir e baixar suas próprias imagens, além de acessar outras imagens públicas. A plataforma é gratuita e você poderá criar uma conta sem nenhum custo extra.   
+
+### O que é um Container Docker?
+
+Um container docker é uma unidade leve e isolada de software que agrupa um aplicativo e todas as suas dependências necessárias (como bibliotecas, arquivos de configuração e binários) para que ele possa ser executado de forma consistente em qualquer ambiente. A partir de uma imagem docker, é possível construir o container da aplicação desejada.
+
+As principais características de um container são:
+
+- **Isolamento**: o sistema de arquivos, processos, redes, dependências e configurações do container são específicas para a aplicação. Essa infraestrutura é isolada do sistema operacional host e de outros containers;  
+- **Portabilidade**: um container pode ser executado em qualquer máquina host, independentemente de seu sistema operacional subjacente. Isso é possível desde que a máquina host possua compatibilidade com o docker e a instalação do mesmo;
+- **Eficiência**: o container, diferentemente das máquinas virtuais, não apresentam sistema operacional em sua estrutura interna. Sua operação se dá devido ao compartilhamento do mesmo kernel com o sistema operacional host, o que o torna mais leve e rápido;
+- **Ciclo de vida**: um container pode ser criado, iniciado, parado, reiniciado e removido. Ele é considerado uma "instância em execução" da imagem docker;
+- **Imutabilidade**:  qualquer alteração feita internamente ao container (ex. executar um comando de instalação de dependência específica) será perdida quando o container for reinicializado, a menos que seja salva em um volume ou redefinido sua imagem docker. Por esse motivo, containers são tidos como efêmeros e imutáveis;  
+
+
+
+
+
+
+
+
+### O que é um Volume Docker?
 
 ### O repositório DockerHub
 
