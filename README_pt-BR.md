@@ -46,16 +46,26 @@ As principais características de um container são:
 - **Ciclo de vida**: um container pode ser criado, iniciado, parado, reiniciado e removido. Ele é considerado uma "instância em execução" da imagem docker;
 - **Imutabilidade**:  qualquer alteração feita internamente ao container (ex. executar um comando de instalação de dependência específica) será perdida quando o container for reinicializado, a menos que seja salva em um volume ou redefinido sua imagem docker. Por esse motivo, containers são tidos como efêmeros e imutáveis;  
 
-
-
-
-
-
-
-
 ### O que é um Volume Docker?
 
-### O repositório DockerHub
+Um volume docker é um mecanismo para armazenar e compartilhar dados entre contêineres e entre contêineres e o host. Em uma situação em que o container é removido ou reinicializado, ele perde todas as suas informações. Uma forma de contornar o problema da perda dessas informações é fazendo uso de volumes no docker, que preserva os dados a partir da persistência no ambiente host.
+
+Na prática, o nosso objetivo é criar cópias dos dados que estão no container para a máquina host que contém o docker. Se houver, por parte do container, indisponibilidade de seu acesso ou sua inexistência, ainda será possível acessar esses dados, criando uma independência dos dados para com o estado do container que o manteria esses dados.
+
+Em resumo, criar volumes é criar repositórios de dados dos containers, a partir do gerenciamento do docker.
+
+As principais características de um volume docker são:
+
+- **Persistência**: os dados em um volume não são excluídos quando o contêiner é removido;
+- **Compartilhamento**: facilita a troca de arquivos entre contêineres;
+- **Desempenho**: volumes são mais rápidos e eficientes do que bind mounts (montagens diretas de pastas do sistema de arquivos do host);
+- **Portabilidade**: volumes são gerenciados pelo docker, tornando mais fácil transportar dados entre ambientes;
+
+### O Repositório DockerHub
+
+O DockerHub é uma plataforma em nuvem centralizada utilizada como repositório remoto para imagens docker (semelhente ao que o GitHub é para o armazenamento de códigos fontes). Popular e amplamente utilizado para buscar, armazenar e distribuir imagens docker desenvolvidas por indivíduos, equipes ou organizações.
+
+> Para mais informações, vide site oficial [DockerHub](https://hub.docker.com/).
 
 ## Instalação do Postgres
 
