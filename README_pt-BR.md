@@ -146,7 +146,42 @@ Após execução do comando, você pode estar verificando sua imagem Postgres no
 
 > OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
 
-### Criação da instância Postgres e orientações gerais
+### Criação da instância Postgres
+
+Você pode criar sua instância Postgres de duas maneiras diferentes, a partir de uma configuração padrão ou personalizada. De modo mais simples, podemos criar a instância do Postgres, via configuração padrão, com o seguinte comando:
+
+```
+    docker run --name [pg_ctn_name] -e POSTGRES_PASSWORD=[pg_secret_password] -d postgres:[version]
+```
+
+em que ***pg_ctn_name*** representará o nome do container docker relativo a instância Postgres, ***pg_secret_password*** representará a senha do superusuário Postgres e ***version*** representa a versão Postgres utilizada da imagem docker.
+
+> OBS:. na ação de criação da instância Postgres são criados um superusuário e um banco de dados padrão denominado 'postgres'.
+
+De modo mais personalizado, embora com maiores detalhes, você pode seguir a forma explicitada no comando:
+
+```
+    docker run --name [pg_ctn_name] \
+        -p [host_port]:[ctn_port] \
+        -e POSTGRES_PASSWORD=[pg_secret_password] \
+        -e POSTGRES_USER=[pg_user_name] \
+        -e POSTGRES_DB=[pg_db_name] \        
+        -e POSTGRES_INITDB_ARGS=[pg_initdb_args] \
+        -e POSTGRES_INITDB_WALDIR=[pg_initdb_waldir] \
+        -e POSTGRES_HOST_AUTH_METHOD=[pg_host_auth_method] \
+        -e PGDATA=[data_directory_path] \
+        -v [host_data_directory_path]:[data_directory_path] \
+        -d postgres:[version]
+```
+
+-- em edição 
+https://hub.docker.com/_/postgres
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
+#### Orientações gerais
+
+#### Variáveis de ambiente
 
 ### Ligar ou religar minha instância Postgres
 
