@@ -154,7 +154,7 @@ Você pode criar sua instância Postgres de duas maneiras diferentes, a partir d
     docker run --name [pg_ctn_name] -e POSTGRES_PASSWORD=[pg_secret_password] -d postgres:[version]
 ```
 
-em que ***pg_ctn_name*** representará o nome do container docker relativo a instância Postgres, ***pg_secret_password*** representará a senha do superusuário Postgres e ***version*** representa a versão Postgres utilizada da imagem docker.
+em que ***pg_ctn_name*** representará o nome do container docker relativo a instância Postgres; ***pg_secret_password*** representará a senha do superusuário Postgres; e ***version*** representa a versão Postgres utilizada da imagem docker.
 
 > OBS:. na ação de criação da instância Postgres são criados um superusuário e um banco de dados padrão denominado 'postgres'.
 
@@ -174,14 +174,29 @@ De modo mais personalizado, embora com maiores detalhes, você pode seguir a for
         -d postgres:[version]
 ```
 
--- em edição 
-https://hub.docker.com/_/postgres
+em que ***pg_ctn_name*** representará o nome do container docker relativo a instância Postgres; ***host_port*** e ***ctn_port*** representarão - respectivamente - a porta, no sistema host, usada para acessar o serviço e a porta, no container, em que o serviço está sendo executado; ***pg_secret_password*** representará a senha do superusuário Postgres; ***pg_user_name*** representará o nome do superusuário Postgres; ***pg_db_name*** representará o nome do banco de dados inicial do Postgres; ***pg_initdb_args*** representa a sequência de argumentos adicionais, a serem passados para o comando **initdb**, que serão utilizados durante a inicialização do banco de dados; ***pg_initdb_waldir*** representará o diretório local de armazenamento de logs de transações do Postgres; ***pg_host_auth_method*** representará o método de autenticação de acesso ao banco de dados (via host); ***data_directory_path*** representa o caminho onde os dados do Postgres serão armazenados; ***host_data_directory_path*** representará o caminho do diretório, no sistema host, que será montado no container - em referencia ao volume de dados da instância Postgres; e ***version*** representa a versão Postgres utilizada da imagem docker.
+
+> OBS:. as variáveis de ambiente ​​especificadas só terão efeito se você iniciar o container com um diretório de dados vazio; qualquer banco de dados pré-existente permanecerá intocado na inicialização do contêiner.
+
+Em caso de dúvidas, você pode consultar a [Documentação Postgres no DockerHub](https://hub.docker.com/_/postgres).
 
 > OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
 
 #### Orientações gerais
 
 #### Variáveis de ambiente
+
+| **Variável**                    | **Descrição**                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`POSTGRES_PASSWORD`**         | Esta variável de ambiente define a senha do superusuário para o PostgreSQL. O superusuário padrão é definido pela variável de ambiente **POSTGRES_USER**. Essa variável de ambiente é necessária para que você use a imagem do PostgreSQL. Ela não deve estar vazia ou indefinida.                                                                                                                                                  |
+| **`POSTGRES_USER`**             | Esta variável de ambiente opcional é usada em conjunto com **POSTGRES_PASSWORD** para definir um usuário e sua senha, respectivamente. Ela criará o usuário especificado com poder de superusuário e um banco de dados com o mesmo nome. Caso não seja especificada, então o usuário padrão '**postgres**' será utilizado.                                                                                                          |
+| **`POSTGRES_DB`**               | Esta variável de ambiente opcional pode ser usada para definir um nome diferente para o banco de dados padrão que é criado quando a imagem é iniciada pela primeira vez. Se não for especificada, o valor de **POSTGRES_USER** ('**postgres**', por padrão) será usado.                                                                                                                                                             |
+| **`POSTGRES_INITDB_ARGS`**      | Esta variável de ambiente opcional pode ser usada para enviar argumentos para '**postgres initdb**'. O valor é uma sequência de argumentos separada por espaços, como seria de se esperar para '**postgres initdb**'. Isso é útil para adicionar funcionalidades como somas de verificação de páginas de dados: `-e POSTGRES_INITDB_ARGS="--data-checksums"`.                                                                       |
+| **`POSTGRES_INITDB_WALDIR`**    | Esta variável de ambiente opcional pode ser usada para definir outro local para o log de transações do Postgres. Por padrão, o log de transações é armazenado em um subdiretório da pasta de dados principal do Postgres (**PGDATA**). Às vezes, pode ser desejável armazenar o log de transações em um diretório diferente, que pode ser apoiado por armazenamento com características diferentes de desempenho ou confiabilidade. |
+| **`POSTGRES_HOST_AUTH_METHOD`** | Esta variável opcional pode ser usada para controlar as conexões externas ao banco (via host). Alguns valores possíveis para '**auth-method**' incluem: `trust`, `password`, `md5` e `scram-sha-256`. Se não for especificada, a autenticação de senha ⁠ é usada.                                                                                                                                                                   |
+| **`PGDATA`**                    | Esta variável opcional pode ser usada para definir outro local - como um subdiretório - onde serão armazenados os arquivos do banco de dados. O padrão é `/var/lib/postgresql/data`.                                                                                                                                                                                                                                                |
+
+Para mais detalhes, acesse a [Documentação Postgres no DockerHub](https://hub.docker.com/_/postgres).
 
 ### Ligar ou religar minha instância Postgres
 
