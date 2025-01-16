@@ -154,6 +154,8 @@ Você pode criar sua instância Postgres de duas maneiras diferentes, a partir d
     docker run --name [pg_ctn_name] -e POSTGRES_PASSWORD=[pg_secret_password] -d postgres:[version]
 ```
 
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
 em que ***pg_ctn_name*** representará o nome do container docker relativo a instância Postgres; ***pg_secret_password*** representará a senha do superusuário Postgres; e ***version*** representa a versão Postgres utilizada da imagem docker.
 
 > OBS:. na ação de criação da instância Postgres são criados um superusuário e um banco de dados padrão denominado 'postgres'.
@@ -174,17 +176,50 @@ De modo mais personalizado, embora com maiores detalhes, você pode seguir a for
         -d postgres:[version]
 ```
 
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
 em que ***pg_ctn_name*** representará o nome do container docker relativo a instância Postgres; ***host_port*** e ***ctn_port*** representarão - respectivamente - a porta, no sistema host, usada para acessar o serviço e a porta, no container, em que o serviço está sendo executado; ***pg_secret_password*** representará a senha do superusuário Postgres; ***pg_user_name*** representará o nome do superusuário Postgres; ***pg_db_name*** representará o nome do banco de dados inicial do Postgres; ***pg_initdb_args*** representa a sequência de argumentos adicionais, a serem passados para o comando **initdb**, que serão utilizados durante a inicialização do banco de dados; ***pg_initdb_waldir*** representará o diretório local de armazenamento de logs de transações do Postgres; ***pg_host_auth_method*** representará o método de autenticação de acesso ao banco de dados (via host); ***data_directory_path*** representa o caminho onde os dados do Postgres serão armazenados; ***host_data_directory_path*** representará o caminho do diretório, no sistema host, que será montado no container - em referencia ao volume de dados da instância Postgres; e ***version*** representa a versão Postgres utilizada da imagem docker.
 
 > OBS:. as variáveis de ambiente ​​especificadas só terão efeito se você iniciar o container com um diretório de dados vazio; qualquer banco de dados pré-existente permanecerá intocado na inicialização do contêiner.
 
-Em caso de dúvidas, você pode consultar a [Documentação Postgres no DockerHub](https://hub.docker.com/_/postgres).
+Em caso de dúvidas, com relação a execução docker, consulte a seção de [Orientações Gerais](#orientações-gerais). Na seção [Variáveis de Ambiente](#variáveis-de-ambiente) você encontra descrições completas sobre os principais parâmetros de inicialização para o container Postgres. Para mais informações, acesse a [Documentação Postgres no DockerHub](https://hub.docker.com/_/postgres).
 
-> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+#### Orientações Gerais
 
-#### Orientações gerais
+A fim de complementar os conceitos de execução docker, a tabela abaixo trás um indicativo para as flags que podem ser utilizadas na criação da instância Postgres, são elas:
 
-#### Variáveis de ambiente
+| **Flag**     | **Descrição**                                                                                                                                                                                                                                                                                                         | **Exemplo**                                 |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| **`--name`** | No contexto `docker run` serve para atribuir um nome personalizado ao container que está sendo criado, em vez do docker gerar um ID aleatoriamente.                                                                                                                                                                   | `--name postgres-dbms`                      |
+| **`-p`**     | No contexto `docker run` serve para mapear uma porta do container para uma porta no host (máquina que contém o container). Ele faz o container ficar acessível de fora, permitindo que você se conecte a ele pela porta especificada no host.                                                                         | `-p 5432:5432`                              |
+| **`-e`**     | No contexto `docker run` serve para definir as variáveis de ambiente dentro do container, configurando o comportamento do serviço que será executado.                                                                                                                                                                 | `-e PGDATA=/var/lib/postgresql/data/pgdata` |
+| **`-v`**     | No contexto `docker run` serve para montar volumes, permitindo que um diretório do seu sistema host seja compartilhado com um diretório dentro do contêiner, a fim de garantir que os dados gerados/modificados pelo container sejam armazenados no sistema host (mesmo após o container ser reiniciado ou excluído). | `-v /custom/mount:/var/lib/postgresql/data` |
+| **`-d`**     | No contexto `docker run` serve para executar o container em modo "desligado" (detached mode) ou segundo plano. Isso permite que o container continue rodando em background sem travar o terminal. Em determinados contextos isso pode ser bastante útil.                                                              | `-----`                                     |
+
+Para fim de exemplo, você pode estar testando o comando `docker run` explicitado abaixo (OBS:. considere utilizar a versão de imagem docker mais recente - **latest**):
+
+```
+    docker run --name postgres-dbms \
+        -p 5432:5432 \
+        -e POSTGRES_PASSWORD=postgresAdmin \   
+        -e PGDATA=/var/lib/postgresql/data/pgdata \
+        -v /custom/mount:/var/lib/postgresql/data \
+        -d postgres:latest
+```
+
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
+Após execução do comando, você pode estar verificando sua instância Postgres no repositório de containers gerenciado pelo docker:
+
+```
+    docker ps
+```
+
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
+Para mais detalhes, acesse a documentação em [Running Containers](https://docs.docker.com/engine/containers/run/).
+
+#### Variáveis de Ambiente
 
 | **Variável**                    | **Descrição**                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
