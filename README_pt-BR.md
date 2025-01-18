@@ -233,7 +233,7 @@ Para mais detalhes, acesse a documentação em [Running Containers](https://docs
 
 Para mais detalhes, acesse a [Documentação Postgres no DockerHub](https://hub.docker.com/_/postgres).
 
-### Ligar ou religar minha instância Postgres
+
 
 ## Instalação do pgAdmin
 
@@ -243,6 +243,70 @@ Para mais detalhes, acesse a [Documentação Postgres no DockerHub](https://hub.
 
 ### Criação da instância pgAdmin e orientações gerais
 
-### Ligar ou desligar minha instância pgAdmin
 
-## Desinstalação 
+
+
+## Manutenção dos Containers e Imagens Docker
+
+Nessa seção você encontrará os principais comandos docker utilizados para as manutenções nos containers e imagens relativos as instâncias anteriormente instaladas (Postgres e pgAdmin). Essas manutenções são relativas ao: desligamento de um container, religamento de um container, exclusão de um container e exclusão de uma imagem. As orientações seguintes traçam uma abordagem geral desses procedimentos e exemplificações com os containers e imagens já instânciados.
+
+### Identificação dos Containers, Volumes e Imagens
+
+É necessário antes de qualquer manutenção, seja ela em um container, volume ou imagem, identificá-la e obter o id ou o nome da entidade procurada.
+
+Para buscar informações relativas aos containers em seu ambiente, acesse o repositório docker dos containers usando o comando:
+
+```
+    docker ps
+```
+
+Caso você não identifique nenhum container ativo (em execução) nesse momento, você poderá buscar por todos os containers (ativos e não ativos) no repositório docker dos containers usando o comando:
+
+```
+    docker ps -a
+```
+
+obtenha o id do container em `CONTAINER ID` ou o nome do container em `NAMES`. 
+
+Para buscar informações relativas aos volumes em seu ambiente, acesse o repositório docker dos volumes usando o comando:
+
+```
+    docker volume ls
+```
+
+obtenha o nome do volume em `VOLUME NAME`.
+
+Para buscar informações relativas as imgens em seu ambiente, acesse o repositório docker das imagens usando o comando:
+
+```
+    docker images
+```
+
+obtenha o id da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`. 
+
+### Manutenção da Instância Postgres
+---
+
+#### Desligar o Container Postgres
+
+#### Religar o Container Postgres
+
+#### Exclusão do Container Postgres
+
+#### Exclusão do Volume de Dados do Container Postgres
+
+#### Exclusão da Imagem Docker do Container Postgres
+
+
+### Manutenção da Instância pgAdmin
+---
+
+#### Desligar o Container pgAdmin
+
+#### Religar o Container pgAdmin
+
+#### Exclusão do Container pgAdmin
+
+#### Exclusão da Imagem Docker do Container pgAdmin
+
+
