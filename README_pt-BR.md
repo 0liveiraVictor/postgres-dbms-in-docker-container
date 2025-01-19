@@ -203,7 +203,7 @@ Para fim de exemplo, você pode estar testando o comando `docker run` explicitad
         -p 5432:5432 \
         -e POSTGRES_PASSWORD=postgresAdmin \   
         -e PGDATA=/var/lib/postgresql/data/pgdata \
-        -v /custom/mount:/var/lib/postgresql/data \
+        -v pg_volume_data:/var/lib/postgresql/data \
         -d postgres:latest
 ```
 
@@ -246,13 +246,15 @@ Para mais detalhes, acesse a [Documentação Postgres no DockerHub](https://hub.
 
 
 
-## Manutenção dos Containers e Imagens Docker
+## Manutenção dos Containers, Volumes e Imagens Docker
 
-Nessa seção você encontrará os principais comandos docker utilizados para as manutenções nos containers e imagens relativos as instâncias anteriormente instaladas (Postgres e pgAdmin). Essas manutenções são relativas ao: desligamento de um container, religamento de um container, exclusão de um container e exclusão de uma imagem. As orientações seguintes traçam uma abordagem geral desses procedimentos e exemplificações com os containers e imagens já instânciados.
+Nessa seção você encontrará os principais comandos docker utilizados para as manutenções nos containers, volumes e imagens docker relativos as instâncias anteriormente instaladas (Postgres e pgAdmin). Essas manutenções são referentes ao: desligamento de um container, religamento de um container, exclusão de um container, exclusão de um volume e exclusão de uma imagem. As orientações seguintes traçam uma abordagem geral desses procedimentos e exemplificações com os containers, volumes e imagens já instânciados.
 
 ### Identificação dos Containers, Volumes e Imagens
 
 É necessário antes de qualquer manutenção, seja ela em um container, volume ou imagem, identificá-la e obter o id ou o nome da entidade procurada.
+
+#### Identificação para o Container
 
 Para buscar informações relativas aos containers em seu ambiente, acesse o repositório docker dos containers usando o comando:
 
@@ -260,13 +262,17 @@ Para buscar informações relativas aos containers em seu ambiente, acesse o rep
     docker ps
 ```
 
-Caso você não identifique nenhum container ativo (em execução) nesse momento, você poderá buscar por todos os containers (ativos e não ativos) no repositório docker dos containers usando o comando:
+Caso você não identifique nenhum container ativo (em execução) no momento da busca, você poderá buscar por todos os containers (ativos e inativos) no repositório docker dos containers usando o comando:
 
 ```
     docker ps -a
 ```
 
-obtenha o id do container em `CONTAINER ID` ou o nome do container em `NAMES`. 
+obtenha o id do container em `CONTAINER ID` ou o nome do container em `NAMES`.
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
+#### Identificação para o Volume
 
 Para buscar informações relativas aos volumes em seu ambiente, acesse o repositório docker dos volumes usando o comando:
 
@@ -276,30 +282,134 @@ Para buscar informações relativas aos volumes em seu ambiente, acesse o reposi
 
 obtenha o nome do volume em `VOLUME NAME`.
 
-Para buscar informações relativas as imgens em seu ambiente, acesse o repositório docker das imagens usando o comando:
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
+#### Identificação para a Imagem
+
+Para buscar informações relativas as imagens em seu ambiente, acesse o repositório docker das imagens usando o comando:
 
 ```
     docker images
 ```
 
-obtenha o id da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`. 
+obtenha o id da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`.
+
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
 
 ### Manutenção da Instância Postgres
----
+
+As principais manutenções a serem realizadas na instância Postgres dizem respeito ao: desligamento, religamento e exclusão do container, exclusão do volume de dados e exclusão da imagem docker.
 
 #### Desligar o Container Postgres
 
+Considerando o container em execução, você pode desligá-lo utilizando o comando:
+
+```
+    docker stop [pg_ctn_id ou pg_ctn_name]
+```
+
+em que ***pg_ctn_id*** e  ***pg_ctn_name*** representam, respectivamente, o id e o nome do container docker relativo a instância Postgres; utilize um ou o outro para realizar a ação.
+
+Considerando o container exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize seu desligamento usando o comando:
+
+```
+    docker stop postgres-dbms
+```
+
+Acessando o repositório docker dos containers, confirme o desligamento de sua instância Postgres.
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
 #### Religar o Container Postgres
+
+Considerando o container desligado (inativo), você pode religá-lo utilizando o comando:
+
+```
+    docker start [pg_ctn_id ou pg_ctn_name]
+```
+
+em que ***pg_ctn_id*** e  ***pg_ctn_name*** representam, respectivamente, o id e o nome do container docker relativo a instância Postgres; utilize um ou o outro para realizar a ação.
+
+Considerando o container exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize seu religamento usando o comando:
+
+```
+    docker start postgres-dbms
+```
+
+Acessando o repositório docker dos containers, confirme o religamento de sua instância Postgres.
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
 
 #### Exclusão do Container Postgres
 
+Considerando o container desligado (inativo), você pode excluí-lo utilizando o comando:
+
+```
+    docker rm [pg_ctn_id ou pg_ctn_name]
+```
+
+em que ***pg_ctn_id*** e  ***pg_ctn_name*** representam, respectivamente, o id e o nome do container docker relativo a instância Postgres; utilize um ou o outro para realizar a ação.
+
+> OBS:. Não é possível excluir um container em execução. Para realizar a ação, é necessário primeiramente desligar o container.
+
+Considerando o container exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize sua exclusão usando o comando:
+
+```
+    docker rm postgres-dbms
+```
+
+Acessando o repositório docker dos containers (ativos e inativos), confirme a exclusão de sua instância Postgres.
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
 #### Exclusão do Volume de Dados do Container Postgres
+
+Considerando o container removido, você pode excluir seu volume associado utilizando o comando:
+
+```
+    docker volume rm [pg_volume_name]
+```
+
+em que ***pg_volume_name*** representa o nome do volume associado ao container docker da instância Postgres excluída;
+
+> OBS:. Não é possível excluir um volume de dados associado a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.
+
+Considerando o container exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize a exclusão do volume de dados usando o comando:
+
+```
+    docker volume rm pg_volume_data
+```
+
+Acessando o repositório docker dos volumes, confirme a exclusão do volume de dados da sua instância Postgres.
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
 
 #### Exclusão da Imagem Docker do Container Postgres
 
+Considerando o container removido, você pode excluir sua imagem docker utilizando o comando:
+
+```
+    docker rmi [pg_img_id ou pg_img_name]:[version]
+```
+
+em que ***pg_img_id*** e  ***pg_img_name*** representam, respectivamente, o id e o nome da imagem docker relativo ao container da instância Postgres (utilize um ou o outro para realizar a ação); e ***version*** representa a versão Postgres utilizada da imagem docker.
+
+> OBS:. Não é possível excluir uma imagem associado a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.
+
+Considerando o container exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize a exclusão da imagem docker usando o comando:
+
+```
+    docker rmi postgres:latest
+```
+
+Acessando o repositório docker das imagens, confirme a exclusão da imagem docker relativa ao container da sua instância Postgres.
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
+---
+**--em edição**
 
 ### Manutenção da Instância pgAdmin
----
 
 #### Desligar o Container pgAdmin
 
@@ -308,5 +418,3 @@ obtenha o id da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`.
 #### Exclusão do Container pgAdmin
 
 #### Exclusão da Imagem Docker do Container pgAdmin
-
-
