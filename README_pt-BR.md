@@ -339,7 +339,57 @@ Em caso de dúvidas, com relação a execução docker, consulte a seção de [O
 
 ## Conexão do Postgres e pgAdmin na Rede Docker
 
-**--em edição**
+Cada instância docker, instalada nas sessões anteriores ([Instalação do Postgres](#instalação-do-postgres) e [Instalação do pgAdmin](#instalação-do-pgadmin)), caracterizada por seu respectivo container, é uma entidade isolada que não possue a capacidade de "enxergar" outro container que não esteja em sua própria rede (namespace de rede). Isso significa que a comunicação entre as instâncias do Postgres e pgAdmin está condicionada a existência de uma rede comum as suas instâncias para que a comunicação ocorra adequadamente. Dessa forma é necessário criar uma rede docker (bridge) para o Postgres e pgAdmin.
+
+### Criação da Rede Docker
+
+Para criar uma rede docker (bridge) use o comando:
+
+```
+    docker network create [network_name]
+```
+
+em que `network_name` representará o nome da rede docker que será comum as instâncias Postgres e pgAdmin.
+
+Após execução do comando, você pode estar verificando sua rede no repositório de redes gerenciado pelo docker:
+
+```
+    docker network ls
+```
+
+### Adicionando a Rede Docker a Configuração de Rede dos Containers
+
+Após a criação da rede docker, atribua os containers a essa rede:
+
+```
+    docker network connect [network_name] [pg_ctn_name]
+```
+
+e
+
+```
+    docker network connect [network_name] [pgadmin_ctn_name]
+```
+
+em que `network_name` representa o nome da rede docker; `pg_ctn_name` representa o nome do container docker relativo a instância Postgres e `pgadmin_ctn_name` representa o nome do container docker relativo a instância pgAdmin.
+
+Para verificar se a rede criada foi adicionada corretamente a configuração de rede do container, inspecione o container. Para isso use o comando:
+
+```
+    docker inspect [ctn_name]
+```
+
+em que `ctn_name` representa o nome do container docker.
+
+Verifique o atributo `Networks`, em `NetworkSettings`, e examine se o nome da rede criada consta nas configurações de rede do container.
+
+Para fim de exemplo, você pode estar testando o comando explicitado abaixo: 
+
+```
+    docker network create postgres-dbms_pgadmin_bridge && \
+    docker network connect postgres-dbms_pgadmin_bridge postgres-dbms && \
+    docker network connect postgres-dbms_pgadmin_bridge pgadmin
+```
 
 ## Manutenção dos Containers, Volumes e Imagens Docker
 
