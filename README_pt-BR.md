@@ -59,6 +59,9 @@ As principais características de um volume docker são:
 - **Desempenho**: volumes são mais rápidos e eficientes do que bind mounts (montagens diretas de pastas do sistema de arquivos do host);
 - **Portabilidade**: volumes são gerenciados pelo docker, tornando mais fácil transportar dados entre ambientes;
 
+**--em edição - adicionar Redes Docker** 
+---
+
 ### O Repositório DockerHub
 
 O DockerHub é uma plataforma em nuvem centralizada utilizada como repositório remoto para imagens docker (semelhente ao que o GitHub é para o armazenamento de códigos fontes). Popular e amplamente utilizado para buscar, armazenar e distribuir imagens docker desenvolvidas por indivíduos, equipes ou organizações.
@@ -80,7 +83,7 @@ Para que possamos responder a essa pergunta, é necessário traçarmos um parale
 Na contexto em que o SGBD do Postgres é instalado via docker, essas problemáticas deixam de existir, pois o SGBD é instânciado dentro de um container - que possui seu próprio sistema de arquivos - juntamente com suas dependências. Dessa forma, toda a configuração do SGBD fica isolada do ambiente host. A figura abaixo mostra a diferença arquitetural no funcionamento de uma máquina virtual em comparação com um container docker:
 
 <div align="center">
-    <img src="./img/vms_vs_containers.png" alt="docker and postgres" width="500" height="253.1">
+    <img src="./img/vms_vs_containers.png" alt="docker and postgres" width="715" height="361.94">
 </div>
 <br>
 
@@ -98,7 +101,7 @@ Na contexto em que o SGBD do Postgres é instalado via docker, essas problemáti
 
 ## Instalação do Postgres
 
-Para realizarmos a instalação da instância Postgres em um container docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos e elencado o passo a passo para baixar a imagem docker, criar a instância, desligar e religar o container. Caso você apresente dificuldades em alguns conceito a respeito do docker, você pode estar acessar a seção sobre a [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
+Para realizarmos a instalação da instância Postgres como um container docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos e elencado o passo a passo para baixar a imagem docker, criar a instância, desligar e religar o container. Caso você apresente dificuldades em alguns conceito a respeito do docker, você pode estar acessar a seção sobre a [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
 
 ### Pré-requisitos
 
@@ -196,14 +199,17 @@ A fim de complementar os conceitos de execução docker, a tabela abaixo trás u
 | **`-v`**     | No contexto `docker run` serve para montar volumes, permitindo que um diretório do seu sistema host seja compartilhado com um diretório dentro do contêiner, a fim de garantir que os dados gerados/modificados pelo container sejam armazenados no sistema host (mesmo após o container ser reiniciado ou excluído). | `-v /custom/mount:/var/lib/postgresql/data` |
 | **`-d`**     | No contexto `docker run` serve para executar o container em modo "desligado" (detached mode) ou segundo plano. Isso permite que o container continue rodando em background sem travar o terminal. Em determinados contextos isso pode ser bastante útil.                                                              | `-----`                                     |
 
-Para fim de exemplo, você pode estar testando o comando `docker run` explicitado abaixo (OBS:. considere utilizar a versão de imagem docker mais recente - **latest**):
+Para fim de exemplo, você pode estar testando o comando `docker run` explicitado abaixo: 
+
+> OBS:. considere utilizar a versão de imagem docker mais recente (`latest`):
 
 ```
     docker run --name postgres-dbms \
         -p 5432:5432 \
-        -e POSTGRES_PASSWORD=postgresAdmin \   
-        -e PGDATA=/var/lib/postgresql/data/pgdata \
-        -v pg_volume_data:/var/lib/postgresql/data \
+        -e POSTGRES_PASSWORD=postgresAdmin \
+        -e POSTGRES_USER=postgresAdmin \
+        -e PGDATA=/var/lib/postgresql/data \
+        -v pg_data_volume:/var/lib/postgresql/data \
         -d postgres:latest
 ```
 
@@ -233,18 +239,107 @@ Para mais detalhes, acesse a documentação em [Running Containers](https://docs
 
 Para mais detalhes, acesse a [Documentação Postgres no DockerHub](https://hub.docker.com/_/postgres).
 
-
-
 ## Instalação do pgAdmin
 
-### Requisito de Uso
+Para realizarmos a instalação da instância do pgAdmin como um container docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos e elencado o passo a passo para baixar a imagem docker, criar a instância, desligar e religar o container. Caso você apresente dificuldades em alguns conceito a respeito do docker, você pode estar acessar a seção sobre a [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
 
-### Baixando a imagem oficial do pgAdmin
+### Pré-requisitos
 
-### Criação da instância pgAdmin e orientações gerais
+O único pré-requisito necessário para termos a instância pgAdmin como um container docker rodando em um ambiente é termos o docker instalado. Para verificar se você possui o docker instalado em sua máquina, use o comando:
 
+```
+    docker info
+```
 
+ou, mais resumidamente, 
 
+```
+    docker --version
+```
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
+Caso não possua o docker instalado em sua máquina, verifique o sistema operacional do seu servidor e realize o procedimento de instalação. Para informações de instalação do docker, acesse a página de documentação [Install Docker Engine](https://docs.docker.com/engine/install/) ou os badges abaixo.
+
+[![Windows](https://img.shields.io/static/v1?label=OS&message=Windows&color=blue&style=plastic)](https://docs.docker.com/desktop/setup/install/windows-install/)
+[![Linux](https://img.shields.io/static/v1?label=OS&message=Linux&color=green&style=plastic)](https://docs.docker.com/desktop/setup/install/linux/)
+[![macOS](https://img.shields.io/static/v1?label=OS&message=macOS&color=orange&style=plastic)](https://docs.docker.com/desktop/setup/install/mac-install/)
+
+Além disso, ainda que não seja considerado um pré-requisito, a instalação do Postgres deve ser um passo precedente a instalação do pgAdmin, tendo em visto que o pgAdmin será utilizado como interface de acesso ao seu banco de dados. 
+
+> OBS:. acesse informações de instalação do Postgres na seção [Instalação do Postgres](#instalação-do-postgres)
+
+### Baixando a imagem oficial do pgAmin
+
+A [Imagem Oficial do pgAdmin](https://hub.docker.com/r/dpage/pgadmin4/) está hospedada no DockerHub. Ela é pública e acessível. Nesse caso, iremos baixar a versão mais recente (tag: `latest`). Para baixa-la em seu servidor, use o comando:
+
+```
+    docker pull dpage/pgadmin4
+```
+
+ou, caso queira baixar alguma versão específica do pgAdmin, 
+
+```
+    docker pull dpage/pgadmin4:[version]
+```
+
+em que `version` representa a versão pgAdmin desejada.
+
+Após execução do comando, você pode estar verificando a imagem pgAdmin no seu repositório de imagens gerenciado pelo docker:
+
+```
+    docker images
+```
+
+> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
+
+### Criação da instância pgAdmin
+
+De modo direto e simples, podemos criar a instância do pgAdmin - via configuração padrão - com o seguinte comando:
+
+```
+    docker run --name [pgadmin_ctn_name] \
+        -p [host_port]:80 \
+        -e 'PGADMIN_DEFAULT_EMAIL=[user_email]' \
+        -e 'PGADMIN_DEFAULT_PASSWORD=[pgadmin_secret_password]' \
+        -d dpage/pgadmin4:[version]
+```
+
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
+em que `pgadmin_ctn_name` representará o nome do container docker relativo a instância pgAdmin; `host_port` representará a porta, no sistema host, usada para acessar o serviço do pgAdmin; `user_email` e `pgadmin_secret_password` representarão, respectivamente, um email válido de usuário e sua senha de acesso para autenticar no serviço do pgAdmin; e `version` representa a versão pgAdmin utilizada da imagem docker.
+
+Em caso de personalização do container, você pode acessar a [Documentação do pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html) para mais informações. Lá, você pode encontrar mais detalhes de variáveis de ambiente, mapeamento de arquivos e diretórios, execução de container protegido por TLS e entre outros.
+
+Para fim de exemplo, você pode estar testando o comando `docker run` explicitado abaixo: 
+
+> OBS:. considere utilizar a versão de imagem docker mais recente (`latest`):
+
+```
+    docker run --name pgadmin \
+        -p 80:80 \
+        -e 'PGADMIN_DEFAULT_EMAIL=your_user_email@domain.com' \
+        -e 'PGADMIN_DEFAULT_PASSWORD=pgAdmin' \
+        -d dpage/pgadmin4:latest
+```
+
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
+Após execução do comando, você pode estar verificando sua instância pgAdmin no repositório de containers gerenciado pelo docker:
+
+```
+    docker ps
+```
+
+> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+
+Para mais detalhes, acesse a documentação em [Running Containers](https://docs.docker.com/engine/containers/run/). 
+
+Em caso de dúvidas, com relação a execução docker, consulte a seção de [Orientações Gerais](#orientações-gerais). As orientações fazem referência ao processo de instalação do Postgres, mas trazem uma abordagem genérica no uso de flags do docker. Caso necessite de informações mais gerais relativas ao pgAdmin, aconselho a busca-la em [Documentação do pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
+
+## Conexão do Postgres e pgAdmin na Rede Docker
+
+**--em edição**
 
 ## Manutenção dos Containers, Volumes e Imagens Docker
 
@@ -407,7 +502,6 @@ Acessando o repositório docker das imagens, confirme a exclusão da imagem dock
 > OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
 
 ---
-**--em edição**
 
 ### Manutenção da Instância pgAdmin
 
