@@ -81,38 +81,40 @@ O DockerHub é uma plataforma em nuvem centralizada utilizada como repositório 
 
 ## Porque Instalar o Postgres Usando o Docker?
 
-Para que possamos responder a essa pergunta, é necessário traçarmos um paralelo dos usos do Postgres instalado diretamente em um ambiente de servidor host e compararmos a um ambiente de container docker. Você entenderá que o uso do docker trás imensas facilidades para o gerenciamento de ações e o processo de instalação de um SGBD como o Postgres, bem como, o de desinstalação, fazem parte dessas facilidades. 
+Para que possamos responder a essa pergunta, é importante comparar dois cenários: a instalação do Postgres diretamente no ambiente host e a instalação em um container Docker. Já adiantando, você entenderá que, por exemplo, o uso do Docker oferece diversas facilidades como o de instalação e remoção do próprio SGBD.
+
+Antes de responder a essa pergunta, vamos primeiramente analisar o problema da instalação direta no ambiente host e suas implicações:
 
 #### Quais eventuais problemas poderiam surgir devido ao uso do Postgres instalado diretamente em um ambiente host?
 
-- **Risco de conflitos**: atualizar ou alternar entre versões do Postgres pode não ser uma tarefa fácil. O gerenciamento de versões de um mesmo SGBD em um mesmo ambiente de servidor host pode causar conflitos, desde configurações a instalação de dependências;
+- **Risco de Conflitos**: atualizar ou alternar entre versões do Postgres pode não ser uma tarefa fácil. O gerenciamento de versões de um mesmo SGBD em um mesmo ambiente pode causar conflitos, tanto nas configurações quanto na instalação de dependências;
 
-- **Desinstalação**: arquivos de configuração e dependências necessárias para execução do SGBD do Postgres são instalada no sistema de arquivos do ambiente host. Caso você não conheça os locais de instalação e configuração do Postgres no ambiente e, caso exista mais de uma versão do SGBD, a desinstalação exigirá trabalho e um conhecimento prévio desse ambiente;
+- **Desinstalação**: arquivos de configuração e dependências para execução do SGBD Postgres são instalada no sistema de arquivos do ambiente host. Caso você não conheça os locais de instalação e configuração do Postgres no ambiente e, caso exista mais de uma versão do SGBD, a desinstalação exigirá trabalho e um conhecimento prévio desse ambiente;
 
 - **Portabilidade**: toda configuração realizada em um ambiente host não será portável, caso você mude de máquina. Basicamente, todo o processo de configuração deverá ser refeito em um novo ambiente host;
 
-Na contexto em que o SGBD do Postgres é instalado via docker, essas problemáticas deixam de existir, pois o SGBD é instânciado dentro de um container - que possui seu próprio sistema de arquivos - juntamente com suas dependências. Dessa forma, toda a configuração do SGBD fica isolada do ambiente host. A figura abaixo mostra a diferença arquitetural no funcionamento de uma máquina virtual em comparação com um container docker:
+No contexto em que o SGBD Postgres é instalado via Docker, essas problemáticas deixam de existir, pois o SGBD é instânciado dentro de um container – que possui seu próprio sistema de arquivos – juntamente com suas dependências. Dessa forma, toda a configuração do SGBD fica isolada do ambiente host. A figura abaixo mostra a diferença arquitetural no funcionamento de uma máquina virtual em comparação com um container Docker:
 
 <div align="center">
-    <img src="./img/vms_vs_containers.png" alt="docker and postgres" width="715" height="361.94">
+    <img src="./img/vms_vs_containers.png" alt="vms vs containers" width="715" height="361.94">
 </div>
 <br>
 
-#### O que torna o uso de uma instância Postgres em um container docker vantajoso?
+#### O que torna o uso de uma instância Postgres em um container Docker vantajoso?
 
-- **Isolamento**: o Postgres rodando em um container é isolado do sistema operacional do host; sua configuração é definida no sistema de arquivos do container (independente do sistema de arquivos do ambiente host); não há conflitos de versões ou alterações indesejadas no sistema host, pois o SGBD fica definido no sistema de arquivos do container (separado do host); é possível rodar várias instâncias do Postgres com diferentes versões ou configurações em paralelo - cada uma definida em um container separadamente;
+- **Isolamento**: o Postgres rodando em um container é isolado do sistema operacional do host; sua configuração é definida no sistema de arquivos do container (independente do sistema de arquivos do ambiente host); não há conflitos de versões ou alterações indesejadas no sistema host, pois o SGBD fica definido no sistema de arquivos do container (separado do host); é possível rodar várias instâncias Postgres com diferentes versões ou configurações em paralelo – cada uma definida em um container separadamente;
 
-- **Configuração**: o ato de instalação do Postgres é simples e direto e, com um único comando, é possível configurar a instância e instalar as bibliotecas necessárias do SGBD sem qualquer intervenção manual; em paralelo, o ato de remoção do container também se apresenta de forma simples, permitindo excluir totalmente a instância Postgres e suas dependências sem deixar resíduos no sistema;      
+- **Configuração**: o ato de instalação do Postgres é simples e direto e, com um único comando, é possível configurar a instância e instalar as bibliotecas necessárias do SGBD sem qualquer intervenção manual; em contrapartida, o ato de remoção do container também se apresenta de forma simples, permitindo excluir totalmente a instância Postgres e suas dependências sem deixar resíduos no sistema;      
 
 - **Teste de Compatibilidade**: devido a capacidade de se rodar facilmente diferentes versões de instâncias Postgres, isso lhe permite testar a compatibilidade com uma aplicação em específico;
 
-- **Portabilidade**: independente de qual ambiente o container esteja, o mesmo container (mesma estrutura) será executado, desde que o sistema contenha o docker instalado. Isso garante a consistência entre ambientes de desenvolvimento, teste e produção;
+- **Portabilidade**: independente de qual ambiente o container esteja, o mesmo container (mesma estrutura) será executado, desde que o sistema contenha o Docker instalado e faça o uso de uma imagem Docker de mesma versão. Isso garante a consistência entre ambientes de desenvolvimento, teste e produção;
 
-- **Reprodutibilidade**: com a garantia da consistência entre os ambientes que fazem uso docker, é possível reproduzir as mesmas condições de atividades para qualquer usuário do Postgres em um container; se funciona em um ambiente, funcionará em um outro ambiente distinto; isso elimina o ditado: "na minha máquina funciona!";
+- **Reprodutibilidade**: com a garantia da consistência entre os ambientes que fazem uso Docker, é possível reproduzir as mesmas condições de atividades para qualquer usuário do Postgres em um container; se funciona em um ambiente host, funcionará em um outro ambiente distinto; isso elimina o ditado: "na minha máquina funciona!".
 
 ## Instalação do Postgres
 
-Para realizarmos a instalação da instância Postgres como um container docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos e elencado o passo a passo para baixar a imagem docker, criar a instância, desligar e religar o container. Caso você apresente dificuldades em alguns conceito a respeito do docker, você pode estar acessar a seção sobre a [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
+Para realizarmos a instalação da instância Postgres como um container Docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos e elencado o passo a passo para baixar a imagem docker, criar a instância, desligar e religar o container. Caso você apresente dificuldades em alguns conceito a respeito do docker, você pode estar acessar a seção sobre a [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
 
 ### Pré-requisitos
 
