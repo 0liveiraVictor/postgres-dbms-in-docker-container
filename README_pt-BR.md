@@ -244,101 +244,95 @@ A tabela abaixo trás informações completas das variáveis de ambiente utiliza
 
 ## Instalação do pgAdmin
 
-Para realizarmos a instalação da instância do pgAdmin como um container docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos e elencado o passo a passo para baixar a imagem docker, criar a instância, desligar e religar o container. Caso você apresente dificuldades em alguns conceito a respeito do docker, você pode estar acessar a seção sobre a [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
+Para realizarmos a instalação da instância do pgAdmin como um container Docker é necessário atender alguns pré-requisitos. Nessa seção será abordado os pré-requisitos necessários e elencado o passo a passo para baixar a imagem Docker e criar a instância pgAdmin propriamente (container). Caso você tenha dificuldades em alguns conceitos a respeito do Docker, sugiro você acessar a seção [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker).
 
-### Pré-requisitos
+> **OBS:. Os comandos Docker listados em toda essa seção de Instalação do pgAdmin funcionam da mesma forma no Linux, Windows e macOS, desde que o Docker Desktop esteja instalado no Windows e no macOS. No Linux, o Docker é executado de forma nativa, enquanto no Windows se recomenda a ativação do WSL 2 para melhor compatibilidade. Com o ambiente configurado, os comandos podem ser usados no terminal (Linux/macOS) ou no PowerShell (Windows) sem nenhuma diferença.**
 
-O único pré-requisito necessário para termos a instância pgAdmin como um container docker rodando em um ambiente é termos o docker instalado. Para verificar se você possui o docker instalado em sua máquina, use o comando:
+### Pré-Requisitos (pgAdmin)
+
+O único pré-requisito necessário para instalação da instância pgAdmin, como um container Docker, em um ambiente é o próprio Docker instalado. Para verificar se você possui o Docker instalado em sua máquina, use o comando:
 
 ```
-    docker info
+docker info
 ```
 
 ou, mais resumidamente, 
 
 ```
-    docker --version
+docker --version
 ```
 
-> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
-
-Caso não possua o docker instalado em sua máquina, verifique o sistema operacional do seu servidor e realize o procedimento de instalação. Para informações de instalação do docker, acesse a página de documentação [Install Docker Engine](https://docs.docker.com/engine/install/) ou os badges abaixo.
+Caso não possua o Docker instalado em sua máquina, verifique o sistema operacional do seu servidor e realize o procedimento de instalação. Para informações de instalação do Docker, acesse a página da documentação [Install Docker Engine](https://docs.docker.com/engine/install/) ou navegue pelas badges indicativas abaixo:
 
 [![Windows](https://img.shields.io/static/v1?label=OS&message=Windows&color=blue&style=plastic)](https://docs.docker.com/desktop/setup/install/windows-install/)
 [![Linux](https://img.shields.io/static/v1?label=OS&message=Linux&color=green&style=plastic)](https://docs.docker.com/desktop/setup/install/linux/)
 [![macOS](https://img.shields.io/static/v1?label=OS&message=macOS&color=orange&style=plastic)](https://docs.docker.com/desktop/setup/install/mac-install/)
 
-Além disso, ainda que não seja considerado um pré-requisito, a instalação do Postgres deve ser um passo precedente a instalação do pgAdmin, tendo em visto que o pgAdmin será utilizado como interface de acesso ao seu banco de dados. 
+Além disso, ainda que não seja considerado um pré-requisito, a instalação do Postgres deve ser um passo precedente a instalação do pgAdmin, tendo em visto que o pgAdmin será utilizado como interface de acesso ao banco de dados. 
 
-> OBS:. acesse informações de instalação do Postgres na seção [Instalação do Postgres](#instalação-do-postgres)
+> **OBS:. Acesse as informações de instalação Docker do Postgres na seção [Instalação do Postgres](#instalação-do-postgres).**
 
-### Baixando a imagem oficial do pgAmin
+### Baixando a Imagem Oficial do pgAdmin
 
-A [Imagem Oficial do pgAdmin](https://hub.docker.com/r/dpage/pgadmin4/) está hospedada no DockerHub. Ela é pública e acessível. Nesse caso, iremos baixar a versão mais recente (tag: `latest`). Para baixa-la em seu servidor, use o comando:
-
-```
-    docker pull dpage/pgadmin4
-```
-
-ou, caso queira baixar alguma versão específica do pgAdmin, 
+A [Imagem Oficial do pgAdmin](https://hub.docker.com/r/dpage/pgadmin4/) está hospedada no DockerHub. Ela é pública e acessível. Nesse caso, iremos baixar a versão mais recente (tag: `latest`). Para baixá-la em seu servidor, use o comando:
 
 ```
-    docker pull dpage/pgadmin4:[version]
+docker pull dpage/pgadmin4
+```
+
+ou, caso queira baixar alguma versão específica do pgAdmin, use:
+
+```
+docker pull dpage/pgadmin4:[version]
 ```
 
 em que `version` representa a versão pgAdmin desejada.
 
-Após execução do comando, você pode estar verificando a imagem pgAdmin no seu repositório de imagens gerenciado pelo docker:
+> Versões específicas do pgAdmin podem ser encontradas em [pgAdmin Tags](https://hub.docker.com/r/dpage/pgadmin4/tags).
+
+Após execução do comando, você pode estar verificando sua imagem Docker pgAdmin no repositório de imagens gerenciado pelo Docker, usando:
 
 ```
-    docker images
+docker images
 ```
-
-> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
 
 ### Criação da Instância pgAdmin
 
-De modo direto e simples, podemos criar a instância do pgAdmin - via configuração padrão - com o seguinte comando:
+De modo direto e simples, podemos criar a instância do pgAdmin – via configuração padrão – com o seguinte comando:
 
 ```
-    docker run --name [pgadmin_ctn_name] \
-        -p [host_port]:80 \
-        -e 'PGADMIN_DEFAULT_EMAIL=[user_email]' \
-        -e 'PGADMIN_DEFAULT_PASSWORD=[pgadmin_secret_password]' \
-        -d dpage/pgadmin4:[version]
+docker run --name [pgadmin_ctn_name] \
+    -p [host_port]:80 \
+    -e 'PGADMIN_DEFAULT_EMAIL=[pgadmin_user_email]' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=[pgadmin_secret_password]' \
+    -d dpage/pgadmin4:[version]
 ```
 
-> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+em que `pgadmin_ctn_name` representará o nome do container Docker relativo a instância pgAdmin; `host_port` representará a porta, no sistema host, usada para acessar o serviço do pgAdmin; `pgadmin_user_email` e `pgadmin_secret_password` representarão, respectivamente, um email de usuário válido e sua senha de acesso para autenticação no serviço do pgAdmin; e `version` representa a versão pgAdmin utilizada pela imagem Docker.
 
-em que `pgadmin_ctn_name` representará o nome do container docker relativo a instância pgAdmin; `host_port` representará a porta, no sistema host, usada para acessar o serviço do pgAdmin; `user_email` e `pgadmin_secret_password` representarão, respectivamente, um email válido de usuário e sua senha de acesso para autenticar no serviço do pgAdmin; e `version` representa a versão pgAdmin utilizada da imagem docker.
-
-Em caso de personalização do container, você pode acessar a [Documentação do pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html) para mais informações. Lá, você pode encontrar mais detalhes de variáveis de ambiente, mapeamento de arquivos e diretórios, execução de container protegido por TLS e entre outros.
+Em caso da necessidade de personalização da execução de inicialização da instância pgAdmin, você pode acessar a [Documentação do pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html) para mais informações. Lá, você pode encontrar mais detalhes de variáveis de ambiente, mapeamento de arquivos e diretórios, execução de container protegido por TLS e entre outros.
 
 Para fim de exemplo, você pode estar testando o comando `docker run` explicitado abaixo: 
 
-> OBS:. considere utilizar a versão de imagem docker mais recente (`latest`):
+> **OBS:. Considere utilizar a versão de imagem Docker mais recente (`latest`):**
 
 ```
-    docker run --name pgadmin \
-        -p 80:80 \
-        -e 'PGADMIN_DEFAULT_EMAIL=your_user_email@domain.com' \
-        -e 'PGADMIN_DEFAULT_PASSWORD=pgAdmin' \
-        -d dpage/pgadmin4:latest
+docker run --name pgadmin \
+    -p 80:80 \
+    -e 'PGADMIN_DEFAULT_EMAIL=your_user_email@domain.com' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=pgAdmin' \
+    -d dpage/pgadmin4:latest
 ```
 
-> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
-
-Após execução do comando, você pode estar verificando sua instância pgAdmin no repositório de containers gerenciado pelo docker:
+Após executar o comando, você pode estar verificando sua instância pgAdmin no repositório de containers gerenciado pelo Docker:
 
 ```
-    docker ps
+docker ps
 ```
 
-> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+Para mais detalhes de execução de containers, você pode estar acessando a documentação [Running Containers](https://docs.docker.com/engine/containers/run/). 
 
-Para mais detalhes, acesse a documentação em [Running Containers](https://docs.docker.com/engine/containers/run/). 
-
-Em caso de dúvidas, com relação a execução docker, consulte a seção de [Orientações Gerais](#orientações-gerais). As orientações fazem referência ao processo de instalação do Postgres, mas trazem uma abordagem genérica no uso de flags do docker. Caso necessite de informações mais gerais relativas ao pgAdmin, aconselho a busca-la em [Documentação do pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
+Em caso de dúvidas, com relação as flags de execução Docker, consulte a seção de [Orientações Gerais](#orientações-gerais). As orientações fazem referência – de exemplificação – ao processo de instalação da instância Postgres, mas trazem uma abordagem genérica informativa que pode lhe ser útil. Caso necessite de informações mais gerais relativas ao pgAdmin, aconselho a buscá-la na [Documentação do pgAdmin](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
 
 ## Conexão do Postgres e pgAdmin na Rede Docker
 
