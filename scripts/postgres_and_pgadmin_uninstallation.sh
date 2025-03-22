@@ -70,7 +70,7 @@ if [ -z "$NETWORK_NAME" ]; then
     NETWORK_NAME=$NETWORK_NAME_DEFAULT
 fi
 
-echo "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Container Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
+echo -e "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Container Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
 
 # removing postgres container
 if docker ps -a --format '{{.Names}}' | grep -q "^$PG_CTN_NAME$"; then
@@ -95,7 +95,7 @@ else
     echo "Container '$PGADMIN_CTN_NAME' does not exist."
 fi
 
-echo "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Image Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
+echo -e "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Image Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
 
 # removing postgres image
 if docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^$PG_IMG_NAME$"; then
@@ -120,7 +120,7 @@ else
     echo "Image '$PGADMIN_IMG_NAME' does not exist."
 fi
 
-echo "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Volume Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
+echo -e "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Volume Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
 
 # removing postgres volume
 if docker volume ls --format '{{.Name}}' | grep -q "^$PG_VOL_NAME$"; then
