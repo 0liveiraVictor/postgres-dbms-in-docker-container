@@ -6,7 +6,7 @@
 # Author:           Victor Oliveira                                      #
 # Email:            victor.soliveira@ufpe.br                             #
 # Start Date:       21/03/2025                                           #
-# Update Dates:     22/03/2025 | ----------                              #
+# Update Dates:     22/03/2025 | 25/03/2025 | ----------                 #
 # Description:      Script for the complete uninstallation of the        # 
 #                   Postgres DBMS and the pgAdmin Graphical              #
 #                   Interface Tool                                       #
@@ -14,13 +14,13 @@
 
 
 
-# default variables | NOTE:. VARIABLES CAN BE EDITED
+# NOTE:. DEFAULT VARIABLES CAN BE EDITED
+# general variables
 PG_CTN_NAME_DEFAULT="postgres-dbms"
 PGADMIN_CTN_NAME_DEFAULT="pgadmin"
 PG_IMG_NAME_DEFAULT="postgres:latest"
 PGADMIN_IMG_NAME_DEFAULT="dpage/pgadmin4:latest"
 PG_VOL_NAME_DEFAULT="pg_data_volume"
-PGADMIN_VOL_NAME_DEFAULT=""
 NETWORK_NAME_DEFAULT="postgres-dbms_pgadmin_bridge"
 
 
@@ -44,7 +44,6 @@ read -p "Enter the name or container ID of the installed pgAdmin container (defa
 read -p "Enter the name or image ID of the installed Postgres Docker image (default: "$PG_IMG_NAME_DEFAULT"): " PG_IMG_NAME
 read -p "Enter the name or image ID of the installed pgAdmin Docker image (default: "$PGADMIN_IMG_NAME_DEFAULT"): " PGADMIN_IMG_NAME
 read -p "Enter the name of the data volume associated with the installed Postgres instance (default: "$PG_VOL_NAME_DEFAULT"): " PG_VOL_NAME
-read -p "Enter the name of the data volume associated with the installed pgAdmin instance (default: "$PGADMIN_VOL_NAME_DEFAULT"): " PGADMIN_VOL_NAME
 read -p "Enter the name or network ID of the Docker network connecting the installed Postgres and pgAdmin instances (default: "$NETWORK_NAME_DEFAULT"): " NETWORK_NAME
 
 # defining the variables with the names and/or ids of the containers, images, volumes and network
@@ -62,9 +61,6 @@ if [ -z "$PGADMIN_IMG_NAME" ]; then
 fi
 if [ -z "$PG_VOL_NAME" ]; then
     PG_VOL_NAME=$PG_VOL_NAME_DEFAULT
-fi
-if [ -z "$PGADMIN_VOL_NAME" ]; then
-    PGADMIN_VOL_NAME=$PGADMIN_VOL_NAME_DEFAULT
 fi
 if [ -z "$NETWORK_NAME" ]; then
     NETWORK_NAME=$NETWORK_NAME_DEFAULT
@@ -132,19 +128,6 @@ if docker volume ls --format '{{.Name}}' | grep -q "^$PG_VOL_NAME$"; then
     fi
 else
     echo "Volume '$PG_VOL_NAME' does not exist."
-fi
-# removing pgadmin volume
-if [ -n "$PGADMIN_VOL_NAME" ]; then
-    if docker volume ls --format '{{.Name}}' | grep -q "^$PGADMIN_VOL_NAME$"; then
-        docker volume rm "$PGADMIN_VOL_NAME" > /dev/null 2>&1
-        if [ $? -eq 0 ]; then
-            echo -e "\nVolume '$PGADMIN_VOL_NAME' REMOVED successfully."
-        else
-            echo -e "\nFAILED to remove volume '$PGADMIN_VOL_NAME'. Note: It might still be in use or there is an issue with the volume."
-        fi
-    else
-        echo -e "\nVolume '$PGADMIN_VOL_NAME' does not exist."
-    fi
 fi
 
 echo -e "\n¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ Network Removal Action ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨\n"
