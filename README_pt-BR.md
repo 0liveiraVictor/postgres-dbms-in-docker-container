@@ -395,180 +395,226 @@ em que `ctn_name` representa o nome do container Docker relativo à instância i
 
 Verifique o atributo `Networks`, em `NetworkSettings`, e examine se o nome da rede criada consta nas configurações de rede do container inspecionado.
 
-## Manutenção dos Containers, Volumes, Rede e Imagens Docker
+## Manutenção dos Containers, Volume, Rede e Imagens Docker
 
-Nessa seção você encontrará os principais comandos docker utilizados para as manutenções nos containers, volumes e imagens docker relativos as instâncias anteriormente instaladas (Postgres e pgAdmin). Essas manutenções são referentes ao: desligamento de um container, religamento de um container, exclusão de um container, exclusão de um volume e exclusão de uma imagem. As orientações seguintes traçam uma abordagem geral desses procedimentos e exemplificações com os containers, volumes e imagens já instânciados.
+> **OBS:. Os comandos Docker listados em toda essa seção de Manutenção dos Containers, Volume, Rede e Imagens Docker funcionam da mesma forma no Linux, Windows e macOS, desde que o Docker Desktop esteja instalado no Windows e no macOS. No Linux, o Docker é executado de forma nativa, enquanto no Windows se recomenda a ativação do WSL 2 para melhor compatibilidade. Com o ambiente configurado, os comandos podem ser usados no terminal (Linux/macOS) ou no PowerShell (Windows) sem nenhuma diferença.**
 
-### Identificação dos Containers, Volumes e Imagens
+Nessa seção você encontrará os principais comandos utilizados para as manutenções, no Docker, relativas as instâncias anteriormente instaladas – Postgres e pgAdmin. Essas manutenções se referem:
 
-É necessário antes de qualquer manutenção, seja ela em um container, volume ou imagem, identificá-la e obter o id ou o nome da entidade procurada.
+- Aos Containers (Postgres e pgAdmin):
+    - Ação de Desligamento
+    - Ação de Religamento
+    - Ação de Exclusão
+- Ao Volume (Postgres):
+    - Ação de Exclusão
+- A Rede:
+    - Ação de Exclusão
+- As Imagens (Postgres e pgAdmin):
+    - Ação de Exclusão
 
-#### Identificação para o Container
+### Identificação dos Containers, Volumes, Redes e Imagens
 
-Para buscar informações relativas aos containers em seu ambiente, acesse o repositório docker dos containers usando o comando:
+É necessário antes de qualquer manutenção, seja ela em um container, volume, rede ou imagem, identificar e obter o ID ou o nome da entidade buscada. 
 
-```
-    docker ps
-```
+> Certifique-se de que qualquer operação de manutenção seja realizada na entidade correta. Para isso, a identificação da entidade é crucial.
 
-Caso você não identifique nenhum container ativo (em execução) no momento da busca, você poderá buscar por todos os containers (ativos e inativos) no repositório docker dos containers usando o comando:
+#### Identificação de Containers
 
-```
-    docker ps -a
-```
-
-obtenha o id do container em `CONTAINER ID` ou o nome do container em `NAMES`.
-
-> OBS:. comandos executáveis em Windows (via PowerShell), Linux e MacOS.
-
-#### Identificação para o Volume
-
-Para buscar informações relativas aos volumes em seu ambiente, acesse o repositório docker dos volumes usando o comando:
+Para buscar informações relativas aos containers em um ambiente, acesse o repositório Docker dos containers usando o comando:
 
 ```
-    docker volume ls
+docker ps
+```
+
+Caso você não identifique nenhum container ativo (em execução) no momento da busca, você poderá buscar por todos os containers (ativos e inativos) no repositório Docker dos containers usando o comando:
+
+```
+docker ps -a
+```
+
+obtenha o ID do container em `CONTAINER ID` ou o nome do container em `NAMES`.
+
+#### Identificação de Volumes
+
+Para buscar informações relativas aos volumes em um ambiente, acesse o repositório Docker dos volumes usando o comando:
+
+```
+docker volume ls
 ```
 
 obtenha o nome do volume em `VOLUME NAME`.
 
-> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
+#### Identificação de Redes
 
-#### Identificação para a Imagem
-
-Para buscar informações relativas as imagens em seu ambiente, acesse o repositório docker das imagens usando o comando:
+Para buscar informações relativas as redes em um ambiente, acesse o repositório Docker das redes usando o comando:
 
 ```
-    docker images
+docker network ls
+```
+
+obtenha o ID da rede em `NETWORK ID` ou o nome do rede em `NAME`.
+
+#### Identificação de Imagens
+
+Para buscar informações relativas as imagens em um ambiente, acesse o repositório Docker das imagens usando o comando:
+
+```
+docker images
 ```
 
 obtenha o id da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`.
 
-> OBS:. comando executável em Windows (via PowerShell), Linux e MacOS.
-
 ### Manutenção das Instâncias Instaladas
 
-As manutenções podem ser realizadas nas instâncias previamente instaladas nas seções [Instalação do Postgres](#instalação-do-postgres) e [Instalação do pgAdmin](#instalação-do-pgadmin). Os processos de manutenção podem ser realizados em qualquer container, volume ou imagem docker e suas ações correspondem ao: desligamento, religamento e exclusão do container, exclusão do volume de dados e exclusão da imagem docker.
+As manutenções podem ser realizadas nas instâncias previamente instaladas nas seções [Instalação do Postgres](#instalação-do-postgres) e [Instalação do pgAdmin](#instalação-do-pgadmin). Vale lembrar que os processos de manutenção podem ser realizados em qualquer container, volume, rede ou imagem Docker que você tiver em um ambiente, pois as ações são padronizadas no Docker. A seguir, as orientações abaixo traçam uma abordagem geral desses procedimentos e exemplificações com os containers, volume, rede e imagens já instânciados.
 
-#### Desligar o Container
+#### Desligamento do Container
 
 Considerando o container em execução, você pode desligá-lo utilizando o comando:
 
 ```
-    docker stop [ctn_id ou ctn_name]
+docker stop [ctn_id ou ctn_name]
 ```
 
-em que `ctn_id` e  `ctn_name` representam, respectivamente, o id e o nome do container docker relativo a instância; utilize um ou o outro para realizar a ação.
+em que `ctn_id` e `ctn_name` representam, respectivamente, o ID e o nome do container Docker relativo a instância; utilize um dos parâmetros para realizar a ação.
 
-Considerando o container Postgres exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize seu desligamento usando o comando:
+Considerando o container Postgres exemplificado ao final da seção [Criação da Instância Postgres](#criação-da-instância-postgres), realize seu desligamento usando o comando:
 
 ```
-    docker stop postgres-dbms
+docker stop postgres-dbms
 ```
 
 Já para o pgAdmin, detalhado na seção [Criação da Instância pgAdmin](#criação-da-instância-pgadmin), use:
 
 ```
-    docker stop pgadmin
+docker stop pgadmin
 ```
 
-Acessando o repositório docker dos containers, confirme o desligamento de sua(s) instância(s).
+Acessando o repositório Docker dos containers, confirme o desligamento de sua(s) instância(s).
 
-#### Religar o Container
+#### Religamento do Container
 
 Considerando o container desligado (inativo), você pode religá-lo utilizando o comando:
 
 ```
-    docker start [ctn_id ou ctn_name]
+docker start [ctn_id ou ctn_name]
 ```
+em que `ctn_id` e `ctn_name` representam, respectivamente, o ID e o nome do container Docker relativo a instância; utilize um dos parâmetros para realizar a ação.
 
-em que `ctn_id` e  `ctn_name` representam, respectivamente, o id e o nome do container docker relativo a instância; utilize um ou o outro para realizar a ação.
-
-Considerando o container Postgres exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize seu religamento usando o comando:
+Considerando o container Postgres exemplificado ao final da seção [Criação da Instância Postgres](#criação-da-instância-postgres), realize seu religamento usando o comando:
 
 ```
-    docker start postgres-dbms
+docker start postgres-dbms
 ```
 
 Já para o pgAdmin, detalhado na seção [Criação da Instância pgAdmin](#criação-da-instância-pgadmin), use:
 
 ```
-    docker start pgadmin
+docker start pgadmin
 ```
 
-Acessando o repositório docker dos containers, confirme o religamento de sua(s) instância(s).
+Acessando o repositório Docker dos containers, confirme o religamento de sua(s) instância(s).
 
 #### Exclusão do Container
 
 Considerando o container desligado (inativo), você pode excluí-lo utilizando o comando:
 
 ```
-    docker rm [ctn_id ou ctn_name]
+docker rm [ctn_id ou ctn_name]
 ```
 
-em que `ctn_id` e  `ctn_name` representam, respectivamente, o id e o nome do container docker relativo a instância; utilize um ou o outro para realizar a ação.
+em que `ctn_id` e `ctn_name` representam, respectivamente, o ID e o nome do container Docker relativo a instância; utilize um dos parâmetros para realizar a ação.
 
-> OBS:. Não é possível excluir um container em execução. Para realizar a ação, é necessário primeiramente desligar o container.
+> **OBS:. A ação de exclusão de um container é permanente!**
 
-Considerando o container Postgres exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize sua exclusão usando o comando:
+> **OBS:. Não é possível excluir um container em execução. Para realizar a ação é necessário primeiramente desligar o container.**
 
-```
-    docker rm postgres-dbms
-```
-
-Já para o pgAdmin, detalhado na seção [Criação da Instância pgAdmin](#criação-da-instância-pgadmin), use:
+Considerando o container Postgres exemplificado ao final da seção [Criação da Instância Postgres](#criação-da-instância-postgres), realize sua exclusão usando o comando:
 
 ```
-    docker rm pgadmin
-```
-
-Acessando o repositório docker dos containers (ativos e inativos), confirme a exclusão de sua(s) instância(s).
-
-#### Exclusão do Volume de Dados do Container
-
-Considerando o container removido, você pode excluir seu volume associado utilizando o comando:
-
-```
-    docker volume rm [volume_name]
-```
-
-em que `volume_name` representa o nome do volume associado ao container docker da instância excluída;
-
-> OBS:. Não é possível excluir um volume de dados associado a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.
-
-> OBS:. Caso tenha interesse de realizar a persistência dos dados fazendo uso de um novo container, não exclua o volume de dados existente!
-
-Considerando o container Postgres exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize a exclusão de seu volume de dados usando o comando:
-
-```
-    docker volume rm pg_volume_data
-```
-
-> OBS:. Para o pgAdmin, a instância explicitada na seção [Criação da Instância pgAdmin](#criação-da-instância-pgadmin) não possue volume de dados associado.
-
-Acessando o repositório docker dos volumes, confirme a exclusão do volume de dados da sua instância Postgres.
-
-#### Exclusão da Imagem Docker do Container
-
-Considerando o container removido, você pode excluir sua imagem docker utilizando o comando:
-
-```
-    docker rmi [img_id ou img_name]:[version]
-```
-
-em que `img_id` e  `img_name` representam, respectivamente, o id e o nome da imagem docker relativo ao container da instância (utilize um ou o outro para realizar a ação); e `version` representa a versão utilizada da imagem docker.
-
-> OBS:. Não é possível excluir uma imagem associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.
-
-Considerando o container Postgres exemplificado ao final da seção [Orientações Gerais](#orientações-gerais), realize a exclusão de sua imagem docker usando o comando:
-
-```
-    docker rmi postgres:latest
+docker rm postgres-dbms
 ```
 
 Já para o pgAdmin, detalhado na seção [Criação da Instância pgAdmin](#criação-da-instância-pgadmin), use:
 
 ```
-    docker rmi dpage/pgadmin4:latest
+docker rm pgadmin
 ```
 
-Acessando o repositório docker das imagens, confirme a exclusão da imagem docker relativa ao container da(s) sua(s) instância(s).
+Acessando o repositório Docker dos containers (ativos e inativos), confirme a exclusão de sua(s) instância(s).
+
+#### Exclusão do Volume
+
+Considerando o container removido, você pode excluir seu volume de dados associado utilizando o comando:
+
+```
+docker volume rm [volume_name]
+```
+
+em que `volume_name` representa o nome do volume de dados associado ao container Docker da instância previamente excluída.
+
+> **OBS:. A ação de exclusão de um volume é permanente!**
+
+> **OBS:. Não é possível excluir um volume de dados associado a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.**
+
+> **OBS:. Caso tenha interesse de realizar a persistência dos dados fazendo uso de um novo container, não exclua o volume de dados existente!**
+
+Considerando o container Postgres exemplificado ao final da seção [Criação da Instância Postgres](#criação-da-instância-postgres), realize a exclusão de seu volume de dados usando o comando:
+
+```
+docker volume rm pg_volume_data
+```
+
+> **OBS:. Para o pgAdmin, a instância explicitada na seção [Criação da Instância pgAdmin](#criação-da-instância-pgadmin) não possue volume de dados associado.**
+
+Acessando o repositório Docker dos volumes, confirme a exclusão do volume de dados da sua instância Postgres.
+
+#### Exclusão da Rede
+
+Considerando o container removido, você pode excluir sua rede utilizando o comando:
+
+```
+docker network rm [net_id ou net_name]
+```
+
+em que `net_id` e `net_name` representam, respectivamente, o ID e o nome da rede Docker associada aos containers das instâncias previamente excluídas (utilize um dos parâmetros para realizar a ação).
+
+> **OBS:. A ação de exclusão de uma rede é permanente!**
+
+> **OBS:. Não é possível excluir uma rede associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.**
+
+Considerando a rede Docker exemplificada na seção [Criação da Rede Docker](#criação-da-rede-docker), realize sua exclusão usando o comando:
+
+```
+docker network rm postgres-dbms_pgadmin_bridge
+```
+
+Acessando o repositório Docker das redes, confirme a exclusão da rede associada a sua(s) instância(s).
+
+#### Exclusão da Imagem
+
+Considerando o container removido, você pode excluir sua imagem Docker utilizando o comando:
+
+```
+docker rmi [img_id ou img_name]:[version]
+```
+
+em que `img_id` e `img_name` representam, respectivamente, o ID e o nome da imagem Docker associada ao container Docker da instância previamente excluída (utilize um dos parâmetros para realizar a ação); e `version` representa a versão utilizada da imagem Docker.
+
+> **OBS:. A ação de exclusão de uma imagem é permanente!**
+
+> **OBS:. Não é possível excluir uma imagem associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.**
+
+Considerando a imagem Postgres baixada na seção [Baixando a Imagem Oficial do Postgres](#baixando-a-imagem-oficial-do-postgres), realize sua exclusão usando o comando:
+
+```
+docker rmi postgres:latest
+```
+
+Já para o pgAdmin, detalhado na seção [Baixando a Imagem Oficial do pgAdmin](#baixando-a-imagem-oficial-do-pgadmin), use:
+
+```
+docker rmi dpage/pgadmin4:latest
+```
+
+Acessando o repositório Docker das imagens, confirme a exclusão da(s) sua(s) imagem(ns).
