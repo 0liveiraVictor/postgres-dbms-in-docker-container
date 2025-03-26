@@ -338,6 +338,8 @@ Em caso de dúvidas, com relação as flags de execução Docker, consulte a se�
 
 Cada instância Docker, instalada nas sessões anteriores ([Instalação do Postgres](#instalação-do-postgres) e [Instalação do pgAdmin](#instalação-do-pgadmin)), caracterizada por seu respectivo container, é uma entidade isolada que não possue a capacidade de "enxergar" outro container que não esteja em sua própria rede Docker (namespace de rede). Isso significa que a comunicação entre as instâncias do Postgres e pgAdmin está condicionada a existência de uma rede comum as suas instâncias – para que a comunicação ocorra efetivamente. Dessa forma é necessário criar uma rede Docker (bridge) para o Postgres e pgAdmin.
 
+> **OBS:. Os comandos Docker listados em toda essa seção de Conexão do Postgres e pgAdmin na Rede Docker funcionam da mesma forma no Linux, Windows e macOS, desde que o Docker Desktop esteja instalado no Windows e no macOS. No Linux, o Docker é executado de forma nativa, enquanto no Windows se recomenda a ativação do WSL 2 para melhor compatibilidade. Com o ambiente configurado, os comandos podem ser usados no terminal (Linux/macOS) ou no PowerShell (Windows) sem nenhuma diferença.**
+
 ### Criação da Rede Docker
 
 Para criar uma rede Docker (bridge) use o comando:
@@ -393,7 +395,7 @@ em que `ctn_name` representa o nome do container Docker relativo à instância i
 
 Verifique o atributo `Networks`, em `NetworkSettings`, e examine se o nome da rede criada consta nas configurações de rede do container inspecionado.
 
-## Manutenção dos Containers, Volumes e Imagens Docker
+## Manutenção dos Containers, Volumes, Rede e Imagens Docker
 
 Nessa seção você encontrará os principais comandos docker utilizados para as manutenções nos containers, volumes e imagens docker relativos as instâncias anteriormente instaladas (Postgres e pgAdmin). Essas manutenções são referentes ao: desligamento de um container, religamento de um container, exclusão de um container, exclusão de um volume e exclusão de uma imagem. As orientações seguintes traçam uma abordagem geral desses procedimentos e exemplificações com os containers, volumes e imagens já instânciados.
 
