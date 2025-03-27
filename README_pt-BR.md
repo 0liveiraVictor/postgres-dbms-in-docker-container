@@ -619,7 +619,7 @@ docker rmi dpage/pgadmin4:latest
 
 Acessando o repositório Docker das imagens, confirme a exclusão da(s) sua(s) imagem(ns).
 
-# Autor:
+## Autor:
 
 <div>
   <div>
@@ -638,7 +638,7 @@ Acessando o repositório Docker das imagens, confirme a exclusão da(s) sua(s) i
   </div>
 </div>
 
-# Licença:
+## Licença:
 
 ```
 Copyright (c) 2025 Victor Oliveira
