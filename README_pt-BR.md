@@ -395,6 +395,64 @@ em que `ctn_name` representa o nome do container Docker relativo à instância i
 
 Verifique o atributo `Networks`, em `NetworkSettings`, e examine se o nome da rede criada consta nas configurações de rede do container inspecionado.
 
+## Scripts de Instalação e Desinstalação das Instâncias Postgres e pgAdmin
+
+> **OBS:. Os comandos CLI listados em toda essa seção de Scripts de Instalação e Desinstalação das Instâncias Postgres e pgAdmin funcionam da mesma forma no Linux e macOS, pois ambos são baseados em Unix. No Windows, recomenda-se o uso do WSL 2 ou do Git Bash para garantir compatibilidade. Caso utilize o PowerShell ou o Prompt de Comando (cmd), alguns comandos podem ter diferenças na sintaxe ou equivalentes específicos.**
+
+Para facilitar o processo de instalação e/ou desinstalação dos containers, volume, rede e imagens das instâncias Docker do Postgres e pgAdmin, este repositório disponibiliza scripts shell relacionados a essas ações. Você pode acessá-los nas badges abaixo:
+
+[![Shell Script](https://img.shields.io/badge/Shell-Install-%23121011?logo=gnu-bash&logoColor=green)](./scripts/postgres_and_pgadmin_installation.sh) <span style="margin-right: 30px;"></span> [![Shell Script](https://img.shields.io/badge/Shell-Uninstall-%23121011?logo=gnu-bash&logoColor=green)](./scripts/postgres_and_pgadmin_uninstallation.sh)
+
+Siga as instruções abaixo para a [Ação de Instalação](#ação-de-instalação) e/ou [Ação de Desinstalação](#ação-de-desinstalação):  
+
+### Ação de Instalação
+
+- Clone esse repositório no ambiente em que deseja instalar as instâncias Docker Postgres e pgAdmin:
+
+    ```
+    git clone git@github.com:0liveiraVictor/postgres-dbms-in-docker-container.git
+    ```
+
+- No ambiente de instalação, acesse o diretório raiz do repositório clonado.
+
+- Dê a permissão de execução do script de instalação para o usuário do sistema:
+
+    ```
+    chmod +x ./scripts/postgres_and_pgadmin_installation.sh
+    ```
+
+- Execute o script de instalação:
+
+    ```
+    ./scripts/postgres_and_pgadmin_installation.sh
+    ```
+
+> **OBS:. Em caso de falha na execução, aconselho você a estar verificando as permissões de execução do script para o usuário e o grupo do sistema operacional em uso.**
+
+### Ação de Desinstalação
+
+- Clone esse repositório no ambiente em que deseja desinstalar as instâncias Docker Postgres e pgAdmin:
+
+    ```
+    git clone git@github.com:0liveiraVictor/postgres-dbms-in-docker-container.git
+    ```
+
+- No ambiente de desinstalação, acesse o diretório raiz do repositório clonado.
+
+- Dê a permissão de execução do script de desinstalação para o usuário do sistema:
+
+    ```
+    chmod +x ./scripts/postgres_and_pgadmin_uninstallation.sh
+    ```
+
+- Execute o script de desinstalação:
+
+    ```
+    ./scripts/postgres_and_pgadmin_uninstallation.sh
+    ```
+
+> **OBS:. Em caso de falha na execução, aconselho você a estar verificando as permissões de execução do script para o usuário e o grupo do sistema operacional em uso.**
+
 ## Manutenção dos Containers, Volume, Rede e Imagens Docker
 
 > **OBS:. Os comandos Docker listados em toda essa seção de Manutenção dos Containers, Volume, Rede e Imagens Docker funcionam da mesma forma no Linux, Windows e macOS, desde que o Docker Desktop esteja instalado no Windows e no macOS. No Linux, o Docker é executado de forma nativa, enquanto no Windows se recomenda a ativação do WSL 2 para melhor compatibilidade. Com o ambiente configurado, os comandos podem ser usados no terminal (Linux/macOS) ou no PowerShell (Windows) sem nenhuma diferença.**
