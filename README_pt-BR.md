@@ -15,6 +15,49 @@ O Postgres é um Sistema de Gerenciamento de Banco de Dados (SGBD) objeto-relaci
 
 Nesse tutorial, você aprenderá a realizar a instalação de uma instância Postgres em um ambiente utilizando a tecnologia Docker e aprendendo seus conceitos envolvidos, tais como: imagem, container, volume, rede e um pouco sobre DockerHub. Adicionalmente, a instalação da ferramenta gráfica de gerenciamento do Postgres, o pgAdmin, também será abordada. Caso se sinta confortável, você pode pular alguns tópicos e acessar diretamente as seções de [Instalação do Postgres](#instalação-do-postgres) e [Instalação do pgAdmin](#instalação-do-pgadmin).
 
+## Sumário
+
+- [Visão Geral da Plataforma Docker](#visão-geral-da-plataforma-docker)
+    - [O que é uma Imagem Docker?](#o-que-é-uma-imagem-docker)
+    - [O que é um Container Docker?](#o-que-é-um-container-docker)
+    - [O que é um Volume Docker?](#o-que-é-um-volume-docker)
+    - [O que é uma Rede Docker?](#o-que-é-uma-rede-docker)
+    - [O Repositório DockerHub](#o-repositório-dockerhub)
+- [Porque Instalar o Postgres Usando o Docker?](#porque-instalar-o-postgres-usando-o-docker)
+    - [Quais eventuais problemas poderiam surgir devido ao uso do Postgres instalado diretamente em um ambiente host?](#quais-eventuais-problemas-poderiam-surgir-devido-ao-uso-do-postgres-instalado-diretamente-em-um-ambiente-host)
+    - [O que torna o uso de uma instância Postgres em um container Docker vantajoso?](#o-que-torna-o-uso-de-uma-instância-postgres-em-um-container-docker-vantajoso)
+- [Instalação do Postgres](#instalação-do-postgres)
+    - [Pré-Requisitos (Postgres)](#pré-requisitos-postgres)
+    - [Baixando a Imagem Oficial do Postgres](#baixando-a-imagem-oficial-do-postgres)
+    - [Criação da Instância Postgres](#criação-da-instância-postgres)
+        - [Orientações Gerais](#orientações-gerais)
+        - [Variáveis de Ambiente](#variáveis-de-ambiente)
+- [Instalação do pgAdmin](#instalação-do-pgadmin)
+    - [Pré-Requisitos (pgAdmin)](#pré-requisitos-pgadmin)
+    - [Baixando a Imagem Oficial do pgAdmin](#baixando-a-imagem-oficial-do-pgadmin)
+    - [Criação da Instância pgAdmin](#criação-da-instância-pgadmin)
+- [Conexão do Postgres e pgAdmin na Rede Docker](#conexão-do-postgres-e-pgadmin-na-rede-docker)
+    - [Criação da Rede Docker](#criação-da-rede-docker)
+    - [Adição da Rede Docker à Configuração de Rede dos Containers](#adição-da-rede-docker-à-configuração-de-rede-dos-containers)
+- [Scripts de Instalação e Desinstalação das Instâncias Postgres e pgAdmin](#scripts-de-instalação-e-desinstalação-das-instâncias-postgres-e-pgadmin)
+    - [Ação de Instalação](#ação-de-instalação)
+    - [Ação de Desinstalação](#ação-de-desinstalação)
+- [Manutenção dos Containers, Volume, Rede e Imagens Docker](#manutenção-dos-containers-volume-rede-e-imagens-docker)
+    - [Identificação dos Containers, Volumes, Redes e Imagens](#identificação-dos-containers-volumes-redes-e-imagens)
+        - [Identificação de Containers](#identificação-de-containers)
+        - [Identificação de Volumes](#identificação-de-volumes)
+        - [Identificação de Redes](#identificação-de-redes)
+        - [Identificação de Imagens](#identificação-de-imagens)
+    - [Manutenção das Instâncias Instaladas](#manutenção-das-instâncias-instaladas)
+        - [Desligamento do Container](#desligamento-do-container)
+        - [Religamento do Container](#religamento-do-container)
+        - [Exclusão do Container](#exclusão-do-container)
+        - [Exclusão do Volume](#exclusão-do-volume)
+        - [Exclusão da Rede](#exclusão-da-rede)
+        - [Exclusão da Imagem](#exclusão-da-imagem)
+- [Autor](#autor)
+- [Licença](#licença)
+
 ## Visão Geral da Plataforma Docker
 
 O [Docker](https://www.docker.com/) é uma plataforma de software projetada para facilitar a criação, teste, distribuição e implantação de aplicativos de forma ágil. Ele organiza o software em uma estrutura denominada container, que é a unidade padronizada que contém todos os elementos necessários para sua execução, tais como: bibliotecas, ferramentas do sistema, código e ambiente de execução. Com o Docker é possível (de forma rápida e fácil) distribuir e implementar softwares em qualquer ambiente, escalando suas aplicações conforme a demanda e garantindo seu bom funcionamento.
@@ -677,7 +720,7 @@ docker rmi dpage/pgadmin4:latest
 
 Acessando o repositório Docker das imagens, confirme a exclusão da(s) sua(s) imagem(ns).
 
-## Autor:
+## Autor
 
 <div>
   <div>
@@ -696,7 +739,7 @@ Acessando o repositório Docker das imagens, confirme a exclusão da(s) sua(s) i
   </div>
 </div>
 
-## Licença:
+## Licença
 
 ```
 Copyright (c) 2025 Victor Oliveira
