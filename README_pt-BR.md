@@ -39,6 +39,7 @@ Nesse tutorial, você aprenderá a realizar a instalação de uma instância Pos
 - [Conexão do Postgres e pgAdmin na Rede Docker](#conexão-do-postgres-e-pgadmin-na-rede-docker)
     - [Criação da Rede Docker](#criação-da-rede-docker)
     - [Adição da Rede Docker à Configuração de Rede dos Containers](#adição-da-rede-docker-à-configuração-de-rede-dos-containers)
+- [Acesso ao Postgres pelo pgAdmin](#acesso-ao-postgres-pelo-pgadmin)
 - [Scripts de Instalação e Desinstalação das Instâncias Postgres e pgAdmin](#scripts-de-instalação-e-desinstalação-das-instâncias-postgres-e-pgadmin)
     - [Ação de Instalação](#ação-de-instalação)
     - [Ação de Desinstalação](#ação-de-desinstalação)
@@ -437,6 +438,27 @@ docker inspect [ctn_name]
 em que `ctn_name` representa o nome do container Docker relativo à instância inspecionada.
 
 Verifique o atributo `Networks`, em `NetworkSettings`, e examine se o nome da rede criada consta nas configurações de rede do container inspecionado.
+
+## Acesso ao Postgres pelo pgAdmin
+
+Para acessar a sua instância Postgres, siga os passos:
+
+1. Entrar no pgAdmin pelo endereço: `http://localhost`; ingresse no endereço pelo browser.
+2. Na página de login (imagem abaixo), inserir as credenciais do usuário administrador (email e senha definidos durante a instalação do pgAdmin). 
+
+<div align="center">
+    <img src="./img/pgadmin_login_page.png" alt="pgadmin login page" width="715" height="324.52">
+</div>
+<br>
+
+3. Após o login, você terá acesso ao painel do pgAdmin (imagem abaixo), onde poderá gerenciar seus bancos de dados.
+
+<div align="center">
+    <img src="./img/pgadmin_home_page.png" alt="pgadmin home page" width="715" height="323.40">
+</div>
+<br>
+
+> **OBS:. Em caso de primeiro acesso ou configuração de um novo servidor, clique para adicionar um novo servidor e preencha os campos necessários para configurar sua instância Postgres.**
 
 ## Scripts de Instalação e Desinstalação das Instâncias Postgres e pgAdmin
 
