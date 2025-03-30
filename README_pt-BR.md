@@ -443,7 +443,7 @@ Verifique o atributo `Networks`, em `NetworkSettings`, e examine se o nome da re
 
 Para acessar a sua instância Postgres, siga os passos:
 
-1. Entrar no pgAdmin pelo endereço: `http://localhost`; ingresse no endereço pelo browser.
+1. Entrar no pgAdmin pelo endereço (URL): `http://localhost`; ingresse no endereço pelo browser.
 2. Na página de login (imagem abaixo), inserir as credenciais do usuário administrador (email e senha definidos durante a instalação do pgAdmin). 
 
 <div align="center">
@@ -472,21 +472,21 @@ Siga as instruções abaixo para a [Ação de Instalação](#ação-de-instalaç
 
 ### Ação de Instalação
 
-- Clone esse repositório no ambiente em que deseja instalar as instâncias Docker Postgres e pgAdmin:
+1. Clonar esse repositório no ambiente em que deseja instalar as instâncias Docker Postgres e pgAdmin:
 
     ```
-    git clone git@github.com:0liveiraVictor/postgres-dbms-in-docker-container.git
+    git clone https://github.com/0liveiraVictor/postgres-dbms-in-docker-container.git
     ```
 
-- No ambiente de instalação, acesse o diretório raiz do repositório clonado.
+2. No ambiente de instalação, acessar o diretório raiz do repositório clonado.
 
-- Dê a permissão de execução do script de instalação para o usuário do sistema:
+3. Dar a permissão de execução do script de instalação para o usuário do sistema:
 
     ```
     chmod +x ./scripts/postgres_and_pgadmin_installation.sh
     ```
 
-- Execute o script de instalação:
+4. Executar o script de instalação:
 
     ```
     ./scripts/postgres_and_pgadmin_installation.sh
@@ -496,21 +496,21 @@ Siga as instruções abaixo para a [Ação de Instalação](#ação-de-instalaç
 
 ### Ação de Desinstalação
 
-- Clone esse repositório no ambiente em que deseja desinstalar as instâncias Docker Postgres e pgAdmin:
+1. Clonar esse repositório no ambiente em que deseja desinstalar as instâncias Docker Postgres e pgAdmin:
 
     ```
-    git clone git@github.com:0liveiraVictor/postgres-dbms-in-docker-container.git
+    git clone https://github.com/0liveiraVictor/postgres-dbms-in-docker-container.git
     ```
 
-- No ambiente de desinstalação, acesse o diretório raiz do repositório clonado.
+2. No ambiente de desinstalação, acessar o diretório raiz do repositório clonado.
 
-- Dê a permissão de execução do script de desinstalação para o usuário do sistema:
+3. Dar a permissão de execução do script de desinstalação para o usuário do sistema:
 
     ```
     chmod +x ./scripts/postgres_and_pgadmin_uninstallation.sh
     ```
 
-- Execute o script de desinstalação:
+4. Executar o script de desinstalação:
 
     ```
     ./scripts/postgres_and_pgadmin_uninstallation.sh
@@ -585,7 +585,7 @@ Para buscar informações relativas as imagens em um ambiente, acesse o reposit�
 docker images
 ```
 
-obtenha o id da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`.
+obtenha o ID da imagem em `IMAGE ID` ou o nome da imagem em `REPOSITORY`.
 
 ### Manutenção das Instâncias Instaladas
 
@@ -678,7 +678,7 @@ em que `volume_name` representa o nome do volume de dados associado ao container
 
 > **OBS:. A ação de exclusão de um volume é permanente!**
 
-> **OBS:. Não é possível excluir um volume de dados associado a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.**
+> **OBS:. Não é possível excluir um volume de dados associado a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação é necessário primeiramente excluir o container.**
 
 > **OBS:. Caso tenha interesse de realizar a persistência dos dados fazendo uso de um novo container, não exclua o volume de dados existente!**
 
@@ -704,7 +704,7 @@ em que `net_id` e `net_name` representam, respectivamente, o ID e o nome da rede
 
 > **OBS:. A ação de exclusão de uma rede é permanente!**
 
-> **OBS:. Não é possível excluir uma rede associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.**
+> **OBS:. Não é possível excluir uma rede associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação é necessário primeiramente excluir o container.**
 
 Considerando a rede Docker exemplificada na seção [Criação da Rede Docker](#criação-da-rede-docker), realize sua exclusão usando o comando:
 
@@ -726,7 +726,7 @@ em que `img_id` e `img_name` representam, respectivamente, o ID e o nome da imag
 
 > **OBS:. A ação de exclusão de uma imagem é permanente!**
 
-> **OBS:. Não é possível excluir uma imagem associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação, é necessário primeiramente excluir o container.**
+> **OBS:. Não é possível excluir uma imagem associada a um container ainda existente, seja ele ativo ou inativo. Para realizar a ação é necessário primeiramente excluir o container.**
 
 Considerando a imagem Postgres baixada na seção [Baixando a Imagem Oficial do Postgres](#baixando-a-imagem-oficial-do-postgres), realize sua exclusão usando o comando:
 
