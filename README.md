@@ -285,3 +285,95 @@ The table below provides complete information about the environment variables us
 | `POSTGRES_INITDB_WALDIR`    | This optional environment variable can be used to specify a different location for the Postgres transaction log. By default, the transaction log is stored in a subdirectory of the main Postgres data folder (`PGDATA`). In some cases, it may be desirable to store the transaction log in a different directory, possibly on storage with different performance or reliability characteristics. |
 | `POSTGRES_HOST_AUTH_METHOD` | This optional variable controls external connections to the database (via host). Some possible values for '**auth-method**' include: `trust`, `password`, `md5`, and `scram-sha-256`. If not specified, password authentication is used by default.                                                                                                                                                |
 | `PGDATA`                    | This optional variable can be used to specify a different location — such as a subdirectory — where the database files will be stored. The default is: `/var/lib/postgresql/data`.                                                                                                                                                                                                                 |
+
+## pgAdmin Installation
+
+To install the pgAdmin instance as a Docker container, some prerequisites must be met. This section will cover the necessary prerequisites and outline the step-by-step process to download the Docker image and create the actual pgAdmin instance (container). If you have difficulties with some Docker-related concepts, I suggest you visit the section [Overview of the Docker Platform](#overview-of-the-docker-platform).
+
+> **NOTE: The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+
+### Prerequisites (pgAdmin)
+
+The only prerequisite for installing a pgAdmin instance as a Docker container in an environment is having Docker itself installed. To check if you have Docker installed on your machine, use the command:
+
+```
+docker info
+```
+
+or, more concisely,
+
+```
+docker --version
+```
+
+If Docker is not installed on your machine, check your server's operating system and follow the installation procedure. For Docker installation information, visit the [Install Docker Engine](https://docs.docker.com/engine/install/) documentation page or browse the indicative badges below:
+
+[![Windows](https://img.shields.io/static/v1?label=OS&message=Windows&color=blue&style=plastic)](https://docs.docker.com/desktop/setup/install/windows/)
+[![Linux](https://img.shields.io/static/v1?label=OS&message=Linux&color=green&style=plastic)](https://docs.docker.com/desktop/setup/install/linux/)
+[![macOS](https://img.shields.io/static/v1?label=OS&message=macOS&color=orange&style=plastic)](https://docs.docker.com/desktop/setup/install/mac-install/)
+
+Additionally, although not considered a prerequisite, installing Postgres should be a step preceding the installation of pgAdmin, as pgAdmin will be used as an interface to access the database.
+
+> **Note: Access the Docker installation information for Postgres in the section [Postgres Installation](#postgres-installation).**
+
+### Downloading the Official pgAdmin Image
+
+The [Official pgAdmin Image](https://hub.docker.com/r/dpage/pgadmin4/) is hosted on DockerHub. It is public and accessible. In this case, we will download the latest version (tag: `latest`). To download it to your server, use the command:
+
+```
+docker pull dpage/pgadmin4
+```
+
+or, if you want to download a specific version of pgAdmin, use:
+
+```
+docker pull dpage/pgadmin4:[version]
+```
+
+where `version` represents the desired pgAdmin version.
+
+> Specific versions of pgAdmin can be found at [pgAdmin Tags](https://hub.docker.com/r/dpage/pgadmin4/tags).
+
+After executing the command, you can verify your pgAdmin Docker image in the repository managed by Docker using:
+
+```
+docker images
+```
+
+### Creating the pgAdmin Instance
+
+In a direct and simple way, we can create the pgAdmin instance – using the default configuration – with the following command:
+
+```
+docker run --name [pgadmin_ctn_name] \
+    -p [host_port]:80 \
+    -e 'PGADMIN_DEFAULT_EMAIL=[pgadmin_user_email]' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=[pgadmin_secret_password]' \
+    -d dpage/pgadmin4:[version]
+```
+
+where `pgadmin_ctn_name` represents the name of the Docker container for the pgAdmin instance; `host_port` represents the port on the host system used to access the pgAdmin service; `pgadmin_user_email` and `pgadmin_secret_password` represent, respectively, a valid user email and the access password for authentication in the pgAdmin service; and `version` represents the pgAdmin version used by the Docker image.
+
+In case you need to customize the startup execution of the pgAdmin instance, you can access the [pgAdmin Documentation](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html) for more information. There, you can find more details about environment variables, file and directory mapping, running a container secured by TLS, among others.  
+
+For example purposes, you can test the `docker run` command shown below:
+
+> **Note:** Consider using the latest Docker image version (`latest`).
+
+```
+docker run --name pgadmin \
+    -p 80:80 \
+    -e 'PGADMIN_DEFAULT_EMAIL=your_user_email@domain.com' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=pgAdmin' \
+    -d dpage/pgadmin4:latest
+```
+
+After executing the command, you can check your pgAdmin instance in the container repository managed by Docker:
+
+```
+docker ps
+```
+
+For more details on running containers, you can access the [Running Containers](https://docs.docker.com/engine/containers/run/) documentation.
+
+If you have any questions regarding Docker execution flags, refer to the [General Guidelines](#general-guidelines) section. The guidelines provide examples based on the PostgreSQL instance installation process but offer a general informative approach that may be useful to you. If you need more general information about pgAdmin, I recommend checking the [pgAdmin Documentation](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
