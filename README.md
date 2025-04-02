@@ -376,7 +376,7 @@ docker ps
 
 For more details on running containers, you can access the [Running Containers](https://docs.docker.com/engine/containers/run/) documentation.
 
-If you have any questions regarding Docker execution flags, refer to the [General Guidelines](#general-guidelines) section. The guidelines provide examples based on the PostgreSQL instance installation process but offer a general informative approach that may be useful to you. If you need more general information about pgAdmin, I recommend checking the [pgAdmin Documentation](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
+If you have any questions regarding Docker execution flags, refer to the [General Guidelines](#general-guidelines) section. The guidelines provide examples based on the Postgres instance installation process but offer a general informative approach that may be useful to you. If you need more general information about pgAdmin, I recommend checking the [pgAdmin Documentation](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
 
 ## Connecting Postgres and pgAdmin on the Docker Network
 
@@ -392,7 +392,7 @@ To create a Docker (bridge) network, use the command:
 docker network create [network_name]
 ```
 
-where `network_name` represents the name of the Docker network that will be common to both the PostgreSQL and pgAdmin instances.
+where `network_name` represents the name of the Docker network that will be common to both the Postgres and pgAdmin instances.
 
 For example purposes, you can test the network creation command shown below:
 
@@ -408,7 +408,7 @@ docker network ls
 
 ### Adding the Docker Network to the Containers' Network Configuration
 
-After creating the Docker network, assign the PostgreSQL and pgAdmin instance containers to this network:
+After creating the Docker network, assign the Postgres and pgAdmin instance containers to this network:
 
 ```
 docker network connect [network_name] [pg_ctn_name]
@@ -420,7 +420,7 @@ and
 docker network connect [network_name] [pgadmin_ctn_name]
 ```
 
-where `network_name` represents the name of the Docker network; `pg_ctn_name` represents the name of the container for the PostgreSQL instance, and `pgadmin_ctn_name` represents the name of the container for the pgAdmin instance.  
+where `network_name` represents the name of the Docker network; `pg_ctn_name` represents the name of the container for the Postgres instance, and `pgadmin_ctn_name` represents the name of the container for the pgAdmin instance.  
 
 For example purposes, you can test the command shown below:
 
@@ -438,3 +438,24 @@ docker inspect [ctn_name]
 where `ctn_name` represents the name of the Docker container for the inspected instance.
 
 Check the `Networks` attribute under `NetworkSettings` and verify if the created network name is listed in the inspected container's network settings.
+
+## Accessing Postgres via pgAdmin
+
+To access your Postgres instance, follow these steps:
+
+1. Open pgAdmin by navigating to the URL: `http://localhost`; access the address through the browser.
+2. On the login page (see image below), enter the administrator user credentials (email and password set during the pgAdmin installation).  
+
+<div align="center">
+    <img src="./img/pgadmin_login_page.png" alt="pgadmin login page" width="715" height="324.52">
+</div>
+<br>
+
+3. After logging in, you will have access to the pgAdmin dashboard (see image below), where you can manage your databases.
+
+<div align="center">
+    <img src="./img/pgadmin_home_page.png" alt="pgadmin home page" width="715" height="323.40">
+</div>
+<br>
+
+> **Note: In case of first access or configuring a new server, click to add a new server and fill in the required fields to set up your Postgres instance.**
