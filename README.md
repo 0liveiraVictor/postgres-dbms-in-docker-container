@@ -459,3 +459,61 @@ To access your Postgres instance, follow these steps:
 <br>
 
 > **Note: In case of first access or configuring a new server, click to add a new server and fill in the required fields to set up your Postgres instance.**
+
+## Installation and Uninstallation Scripts for Postgres and pgAdmin Instances
+
+> **Note: The CLI commands listed throughout this section on Installation and Uninstallation Scripts for Postgres and pgAdmin instances work the same way on Linux and macOS, as both are Unix-based. On Windows, it is recommended to use WSL 2 or Git Bash to ensure compatibility. If using PowerShell or the Command Prompt (cmd), some commands may have syntax differences or specific equivalents.**
+
+To simplify the installation and/or uninstallation process of containers, volume, network, and images for Docker instances of Postgres and pgAdmin, this repository provides shell scripts related to these actions. You can access them through the badges below:
+
+[![Shell Script](https://img.shields.io/badge/Shell-Install-%23121011?logo=gnu-bash&logoColor=green)](./scripts/postgres_and_pgadmin_installation.sh) <span style="margin-right: 30px;"></span> [![Shell Script](https://img.shields.io/badge/Shell-Uninstall-%23121011?logo=gnu-bash&logoColor=green)](./scripts/postgres_and_pgadmin_uninstallation.sh)
+
+Follow the instructions below for the [Installation Action](#installation-action) and/or [Uninstallation Action](#uninstallation-action):  
+
+### Installation Action
+
+1. Clone this repository in the environment where you want to install the Docker instances of Postgres and pgAdmin:
+
+    ```
+    git clone https://github.com/0liveiraVictor/postgres-dbms-in-docker-container.git
+    ```
+
+2. In the installation environment, navigate to the root directory of the cloned repository.
+
+3. Grant execution permission for the installation script to the system user:
+
+    ```
+    chmod +x ./scripts/postgres_and_pgadmin_installation.sh
+    ```
+
+4. Run the installation script:
+
+    ```
+    ./scripts/postgres_and_pgadmin_installation.sh
+    ```
+
+> **NOTE: In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
+
+### Uninstallation Action
+
+1. Clone this repository in the environment where you want to uninstall the Docker Postgres and pgAdmin instances:
+
+    ```
+    git clone https://github.com/0liveiraVictor/postgres-dbms-in-docker-container.git
+    ```
+
+2. In the uninstallation environment, navigate to the root directory of the cloned repository.
+
+3. Grant execution permission for the uninstallation script to the system user:
+
+    ```
+    chmod +x ./scripts/postgres_and_pgadmin_uninstallation.sh
+    ```
+
+4. Execute the uninstallation script:
+
+    ```
+    ./scripts/postgres_and_pgadmin_uninstallation.sh
+    ```
+
+> **NOTE: In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
