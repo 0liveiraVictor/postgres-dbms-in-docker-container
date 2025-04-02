@@ -377,3 +377,64 @@ docker ps
 For more details on running containers, you can access the [Running Containers](https://docs.docker.com/engine/containers/run/) documentation.
 
 If you have any questions regarding Docker execution flags, refer to the [General Guidelines](#general-guidelines) section. The guidelines provide examples based on the PostgreSQL instance installation process but offer a general informative approach that may be useful to you. If you need more general information about pgAdmin, I recommend checking the [pgAdmin Documentation](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html).
+
+## Connecting Postgres and pgAdmin on the Docker Network
+
+Each Docker instance installed in the previous sections ([Postgres Installation](#postgres-installation) and [pgAdmin Installation](#pgadmin-installation)), characterized by its respective container, is an isolated entity that does not have the ability to "see" another container that is not in its own Docker network (network namespace). This means that communication between the Postgres and pgAdmin instances is conditioned on the existence of a common network for their instances – so that communication occurs effectively. Therefore, it is necessary to create a Docker network (bridge) for Postgres and pgAdmin.
+
+> **NOTE: The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+
+### Creating the Docker Network
+
+To create a Docker (bridge) network, use the command:
+
+```
+docker network create [network_name]
+```
+
+where `network_name` represents the name of the Docker network that will be common to both the PostgreSQL and pgAdmin instances.
+
+For example purposes, you can test the network creation command shown below:
+
+```
+docker network create postgres-dbms_pgadmin_bridge
+```
+
+After executing the command, you can check your network in the repository of networks managed by Docker:
+
+```
+docker network ls
+```
+
+### Adding the Docker Network to the Containers' Network Configuration
+
+After creating the Docker network, assign the PostgreSQL and pgAdmin instance containers to this network:
+
+```
+docker network connect [network_name] [pg_ctn_name]
+```
+
+and
+
+```
+docker network connect [network_name] [pgadmin_ctn_name]
+```
+
+where `network_name` represents the name of the Docker network; `pg_ctn_name` represents the name of the container for the PostgreSQL instance, and `pgadmin_ctn_name` represents the name of the container for the pgAdmin instance.  
+
+For example purposes, you can test the command shown below:
+
+```
+docker network connect postgres-dbms_pgadmin_bridge postgres-dbms && \
+docker network connect postgres-dbms_pgadmin_bridge pgadmin
+```
+
+To check if the created network has been correctly added to the container's network configuration, you should inspect the container. To do this, use the command:
+
+```
+docker inspect [ctn_name]
+```
+
+where `ctn_name` represents the name of the Docker container for the inspected instance.
+
+Check the `Networks` attribute under `NetworkSettings` and verify if the created network name is listed in the inspected container's network settings.
