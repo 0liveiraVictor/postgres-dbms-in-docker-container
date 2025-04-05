@@ -742,3 +742,46 @@ docker rmi dpage/pgadmin4:latest
 ```
 
 By accessing the Docker image repository, confirm the deletion of your image(s).
+
+## Author
+
+<div>
+  <div>
+    <h3>Created by:</h3>
+    <img src="https://avatars.githubusercontent.com/u/106946476?s=400&u=32d0a37dfe0b00021769868aa9483ed396468f81&v=4" alt="0liveiraVictor" width="125" height="125">
+    <p>© 2025 <strong>Victor Oliveira</strong></p>
+  </div>
+  <div>
+    <h3>Contact:</h3>
+    <a href="https://github.com/0liveiraVictor" style="display: inline-block; margin-right: 25px;">
+      <img src="https://img.shields.io/badge/GitHub-Profile-black?logo=github" alt="GitHub">
+    </a>
+    <a href="https://www.linkedin.com/in/oliveiravictorrs/">
+        <img src="https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&logoColor=white" alt="LinkedIn">
+    </a>
+  </div>
+</div>
+
+## License
+
+```
+Copyright (c) 2025 Victor Oliveira
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
