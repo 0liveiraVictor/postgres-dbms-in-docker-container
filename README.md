@@ -290,7 +290,7 @@ The table below provides complete information about the environment variables us
 
 To install the pgAdmin instance as a Docker container, some prerequisites must be met. This section will cover the necessary prerequisites and outline the step-by-step process to download the Docker image and create the actual pgAdmin instance (container). If you have difficulties with some Docker-related concepts, I suggest you visit the section [Overview of the Docker Platform](#overview-of-the-docker-platform).
 
-> **NOTE: The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+> **NOTE: The Docker commands listed throughout this pgAdmin Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
 
 ### Prerequisites (pgAdmin)
 
@@ -517,3 +517,228 @@ Follow the instructions below for the [Installation Action](#installation-action
     ```
 
 > **NOTE: In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
+
+## Maintaining Docker Containers, Volume, Network, and Images
+
+> **NOTE: The Docker commands listed throughout this Maintaining Docker Containers, Volume, Network, and Images section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+
+In this section, you will find the main commands used for maintenance in Docker related to previously installed instances – Postgres and pgAdmin. These maintenance actions refer to:
+
+- Containers (Postgres and pgAdmin):  
+    - Shutdown Action  
+    - Restart Action  
+    - Deletion Action  
+- Volume (Postgres):  
+    - Deletion Action  
+- Network:  
+    - Deletion Action  
+- Images (Postgres and pgAdmin):  
+    - Deletion Action  
+
+### Identifying Containers, Volumes, Networks, and Images
+
+It is necessary, before performing any maintenance operation—whether on a container, volume, network, or image—to identify and obtain the ID or name of the targeted entity.
+
+> Ensure that any maintenance operation is performed on the correct entity. Identification of the entity is crucial for this purpose.
+
+#### Identifying Containers
+
+To retrieve information about containers in an environment, access the Docker container repository using the command:
+
+```
+docker ps
+```
+
+If you do not find any active (running) containers at the time of the search, you can look for all containers (both active and inactive) in the Docker container repository using the command:
+
+```
+docker ps -a
+```
+
+obtain the container ID from `CONTAINER ID` or the container name from `NAMES`.
+
+#### Identifying Volumes
+
+To retrieve information about volumes in an environment, access the Docker volume repository using the command:
+
+```
+docker volume ls
+```
+
+obtain the volume name from `VOLUME NAME`.
+
+#### Identifying Networks
+
+To retrieve information about networks in an environment, access the Docker network repository using the command:
+
+```
+docker network ls
+```
+
+obtain the network ID from `NETWORK ID` or the network name from `NAME`.
+
+#### Identifying Images
+
+To retrieve information about images in an environment, access the Docker image repository using the command:
+
+```
+docker images
+```
+
+obtain the image ID from `IMAGE ID` or the image name from `REPOSITORY`.
+
+### Maintaining Installed Instances
+
+Maintenance can be performed on instances previously installed in the sections [Postgres Installation](#postgres-installation) and [pgAdmin Installation](#pgadmin-installation). It is worth noting that maintenance processes can be carried out on any Docker container, volume, network, or image in an environment, as the actions are standardized in Docker. The following guidelines outline a general approach to these procedures, along with examples using the already instantiated containers, volume, network, and images.
+
+#### Stopping the Container
+
+Considering the running container, you can stop it using the following command:
+
+```
+docker stop [ctn_id ou ctn_name]
+```
+
+where `ctn_id` and `ctn_name` represent, respectively, the ID and name of the Docker container instance; use one of these parameters to execute the action.
+
+Considering the Postgres container example at the end of the section [Creating the Postgres Instance](#creating-the-postgres-instance), stop it using the command:
+
+```
+docker stop postgres-dbms
+```
+
+For pgAdmin, detailed in the section [Creating the pgAdmin Instance](#creating-the-pgadmin-instance), use:
+
+```
+docker stop pgadmin
+```
+
+Accessing the Docker container repository, confirm the shutdown of your instance(s).
+
+#### Restarting the Container
+
+Considering the container is stopped (inactive), you can restart it using the command:
+
+```
+docker start [ctn_id ou ctn_name]
+```
+
+where `ctn_id` and `ctn_name` represent, respectively, the Docker container's ID and name related to the instance; use one of the parameters to perform the action.
+
+Considering the Postgres container example shown at the end of the section [Creating the Postgres Instance](#creating-the-postgres-instance), restart it using the command:
+
+```
+docker start postgres-dbms
+```
+
+For the pgAdmin container, detailed in the section [Creating the pgAdmin Instance](#creating-the-pgadmin-instance), use:
+
+```
+docker start pgadmin
+```
+
+By accessing the Docker container repository, confirm the restart of your instance(s).
+
+#### Deleting the Container
+
+If the container is stopped (inactive), you can remove it using the command:
+
+```
+docker rm [ctn_id ou ctn_name]
+```
+
+where `ctn_id` and `ctn_name` represent, respectively, the Docker container's ID and name related to the instance; use one of the parameters to perform the action.
+
+> **NOTE: Deleting a container is a permanent action!**
+
+> **NOTE: It is not possible to delete a running container. You must stop the container before performing the action.**
+
+Considering the Postgres container example shown at the end of the section [Creating the Postgres Instance](#creating-the-postgres-instance), remove it using the command:
+
+```
+docker rm postgres-dbms
+```
+
+For the pgAdmin container, detailed in the section [Creating the pgAdmin Instance](#creating-the-pgadmin-instance), use:
+
+```
+docker rm pgadmin
+```
+
+By accessing the Docker container repository (active and inactive), confirm the removal of your instance(s).
+
+#### Deleting the Volume
+
+If the container has been removed, you can delete its associated data volume using the command:
+
+```
+docker volume rm [volume_name]
+```
+
+where `volume_name` represents the name of the data volume associated with the previously removed Docker container instance.
+
+> **NOTE: Deleting a volume is a permanent action!**
+
+> **NOTE: It is not possible to delete a data volume that is associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
+
+> **NOTE: If you intend to persist the data using a new container, do not delete the existing data volume!**
+
+Considering the Postgres container example shown at the end of the section [Creating the Postgres Instance](#creating-the-postgres-instance), delete its data volume using the command:
+
+```
+docker volume rm pg_volume_data
+```
+
+> **NOTE: The pgAdmin instance, as detailed in the section [Creating the pgAdmin Instance](#creating-the-pgadmin-instance), does not have an associated data volume.**
+
+By accessing the Docker volume repository, confirm the deletion of the data volume for your Postgres instance.
+
+#### Deleting the Network
+
+If the container has been removed, you can delete its network using the command:
+
+```
+docker network rm [net_id ou net_name]
+```
+
+where `net_id` and `net_name` represent, respectively, the ID and name of the Docker network associated with the containers of the previously removed instances (use one of the parameters to perform the action).
+
+> **NOTE: Deleting a network is a permanent action!**
+
+> **NOTE: It is not possible to delete a network associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
+
+Considering the Docker network example shown in the section [Creating the Docker Network](#creating-the-docker-network), delete it using the command:
+
+```
+docker network rm postgres-dbms_pgadmin_bridge
+```
+
+By accessing the Docker network repository, confirm the deletion of the network associated with your instance(s).
+
+#### Deleting the Image
+
+If the container has been removed, you can delete its Docker image using the command:
+
+```
+docker rmi [img_id ou img_name]:[version]
+```
+
+where `img_id` and `img_name` represent, respectively, the ID and name of the Docker image associated with the previously removed container instance (use one of the parameters to perform the action); and `version` represents the version of the Docker image used.
+
+> **NOTE: Deleting an image is a permanent action!**
+
+> **NOTE: It is not possible to delete an image associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
+
+Considering the Postgres image downloaded in the section [Downloading the Official Postgres Image](#downloading-the-official-postgres-image), delete it using the command:
+
+```
+docker rmi postgres:latest
+```
+
+For pgAdmin, detailed in the section [Downloading the Official pgAdmin Image](#downloading-the-official-pgadmin-image), use:
+
+```
+docker rmi dpage/pgadmin4:latest
+```
+
+By accessing the Docker image repository, confirm the deletion of your image(s).
