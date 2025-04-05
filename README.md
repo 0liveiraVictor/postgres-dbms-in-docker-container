@@ -13,7 +13,7 @@
 
 Postgres is an object-relational Database Management System (DBMS) with origins in the POSTGRES project, created at the University of California, Berkeley, in the 1980s. With decades of continuous development, Postgres has established itself as the most advanced open-source database available today. Considered among the four most widely used DBMSs in the market, data from [DB-ENGINES](https://db-engines.com/en/ranking) demonstrate how popular Postgres has become.
 
-In this tutorial, you will learn how to install a Postgres instance in an environment using Docker technology while understanding its related concepts, such as images, containers, volumes, networks, and a bit about DockerHub. Additionally, the installation of Postgres' graphical management tool, pgAdmin, will also be covered. If you feel comfortable, you can skip some topics and go directly to the sections on [Postgres Installation](#postgres-installation) and [pgAdmin Installation](#pgadmin-installation).
+In this tutorial, you will learn how to install a Postgres instance in an environment using Docker technology while understanding its related concepts, such as image, container, volume, network, and a bit about DockerHub. Additionally, the installation of Postgres' graphical management tool, pgAdmin, will also be covered. If you feel comfortable, you can skip some topics and go directly to the sections on [Postgres Installation](#postgres-installation) and [pgAdmin Installation](#pgadmin-installation).
 
 ## Summary
 
@@ -88,7 +88,7 @@ The main characteristics of a container are:
 - **Portability**: A container can run on any host, regardless of its underlying operating system, as long as the host is compatible with the Docker platform;  
 - **Efficiency**: Unlike virtual machines, containers do not include an operating system within their internal structure. They operate by sharing the same kernel as the host operating system, making them lightweight and fast;  
 - **Lifecycle**: A container can be created, started, stopped, restarted, and removed. It is considered a "running instance" of a Docker image;  
-- **Immutability**: Any internal modifications made to the container (e.g., installing a specific dependency) will be lost when the container is restarted — unless they are saved in a data volume or redefined in its Docker image. For this reason, containers are considered ephemeral and immutable.  
+- **Immutability**: Any internal modifications made to the container (e.g., installing a specific dependency) will be lost when the container is restarted – unless they are saved in a data volume or redefined in its Docker image. For this reason, containers are considered ephemeral and immutable.  
 
 ### What is a Docker Volume?
 
@@ -160,7 +160,7 @@ In the context where the Postgres DBMS is installed via Docker, these issues no 
 
 To install the Postgres instance as a Docker container, certain prerequisites must be met. This section will cover the necessary prerequisites and outline the step-by-step process to download the Docker image and create the actual Postgres instance (container). If you have difficulties with some Docker concepts, I suggest accessing the section [Overview of the Docker Platform](#overview-of-the-docker-platform).
 
-> **NOTE: The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+> **NOTE:. The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
 
 ### Prerequisites (Postgres)
 
@@ -232,13 +232,13 @@ docker run --name [pg_ctn_name] \
 
 where `pg_ctn_name` represents the name of the Docker container for the Postgres instance; `host_port` and `ctn_port` represent – respectively – the port on the host system used to access the service and the port within the container where the service will be running; `pg_secret_password` represents the Postgres superuser password; `pg_user_name` represents the Postgres superuser name; `pg_db_name` represents the name of the initial Postgres database; `pg_initdb_args` refers to the sequence of additional arguments passed to the **initdb** command used during database initialization; `pg_initdb_waldir` represents the local directory for storing Postgres transaction logs; `pg_host_auth_method` represents the authentication method for database access (via host); `data_directory_path` represents the path where Postgres data will be stored; `host_data_directory_path` represents the directory path on the host system that will be mounted in the container – referencing the data volume of the Postgres instance; and `version` represents the Postgres version used by the Docker image.
 
-> **Note: When creating a Postgres instance, a superuser and a default database named 'postgres' are automatically created unless different values are specified via environment variables.**
+> **NOTE:. When creating a Postgres instance, a superuser and a default database named 'postgres' are automatically created unless different values are specified via environment variables.**
 
-> **Note: The specified environment variables will only take effect if you start the container with an empty data directory; any pre-existing database will remain untouched upon container startup.**
+> **NOTE:. The specified environment variables will only take effect if you start the container with an empty data directory; any pre-existing database will remain untouched upon container startup.**
 
 As an example, you can test the `docker run` command shown below:
 
-> **Note: Consider using the latest Docker image version (tag: `latest`):**
+> **NOTE:. Consider using the latest Docker image version (tag: `latest`):**
 
 ```
 docker run --name postgres-dbms \
@@ -284,13 +284,13 @@ The table below provides complete information about the environment variables us
 | `POSTGRES_INITDB_ARGS`      | This optional environment variable can be used to pass arguments to '**postgres initdb**'. The value should be a space-separated list of arguments, as expected for '**postgres initdb**'. This is useful for adding features like data page checksums, e.g., `-e POSTGRES_INITDB_ARGS="--data-checksums"`.                                                                                        |
 | `POSTGRES_INITDB_WALDIR`    | This optional environment variable can be used to specify a different location for the Postgres transaction log. By default, the transaction log is stored in a subdirectory of the main Postgres data folder (`PGDATA`). In some cases, it may be desirable to store the transaction log in a different directory, possibly on storage with different performance or reliability characteristics. |
 | `POSTGRES_HOST_AUTH_METHOD` | This optional variable controls external connections to the database (via host). Some possible values for '**auth-method**' include: `trust`, `password`, `md5`, and `scram-sha-256`. If not specified, password authentication is used by default.                                                                                                                                                |
-| `PGDATA`                    | This optional variable can be used to specify a different location — such as a subdirectory — where the database files will be stored. The default is: `/var/lib/postgresql/data`.                                                                                                                                                                                                                 |
+| `PGDATA`                    | This optional variable can be used to specify a different location – such as a subdirectory – where the database files will be stored. The default is: `/var/lib/postgresql/data`.                                                                                                                                                                                                                 |
 
 ## pgAdmin Installation
 
 To install the pgAdmin instance as a Docker container, some prerequisites must be met. This section will cover the necessary prerequisites and outline the step-by-step process to download the Docker image and create the actual pgAdmin instance (container). If you have difficulties with some Docker-related concepts, I suggest you visit the section [Overview of the Docker Platform](#overview-of-the-docker-platform).
 
-> **NOTE: The Docker commands listed throughout this pgAdmin Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+> **NOTE:. The Docker commands listed throughout this pgAdmin Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
 
 ### Prerequisites (pgAdmin)
 
@@ -308,13 +308,13 @@ docker --version
 
 If Docker is not installed on your machine, check your server's operating system and follow the installation procedure. For Docker installation information, visit the [Install Docker Engine](https://docs.docker.com/engine/install/) documentation page or browse the indicative badges below:
 
-[![Windows](https://img.shields.io/static/v1?label=OS&message=Windows&color=blue&style=plastic)](https://docs.docker.com/desktop/setup/install/windows/)
+[![Windows](https://img.shields.io/static/v1?label=OS&message=Windows&color=blue&style=plastic)](https://docs.docker.com/desktop/setup/install/windows-install/)
 [![Linux](https://img.shields.io/static/v1?label=OS&message=Linux&color=green&style=plastic)](https://docs.docker.com/desktop/setup/install/linux/)
 [![macOS](https://img.shields.io/static/v1?label=OS&message=macOS&color=orange&style=plastic)](https://docs.docker.com/desktop/setup/install/mac-install/)
 
 Additionally, although not considered a prerequisite, installing Postgres should be a step preceding the installation of pgAdmin, as pgAdmin will be used as an interface to access the database.
 
-> **Note: Access the Docker installation information for Postgres in the section [Postgres Installation](#postgres-installation).**
+> **NOTE:. Access the Docker installation information for Postgres in the section [Postgres Installation](#postgres-installation).**
 
 ### Downloading the Official pgAdmin Image
 
@@ -358,7 +358,7 @@ In case you need to customize the startup execution of the pgAdmin instance, you
 
 For example purposes, you can test the `docker run` command shown below:
 
-> **Note:** Consider using the latest Docker image version (`latest`).
+> **NOTE:. Consider using the latest Docker image version (`latest`).**
 
 ```
 docker run --name pgadmin \
@@ -382,7 +382,7 @@ If you have any questions regarding Docker execution flags, refer to the [Genera
 
 Each Docker instance installed in the previous sections ([Postgres Installation](#postgres-installation) and [pgAdmin Installation](#pgadmin-installation)), characterized by its respective container, is an isolated entity that does not have the ability to "see" another container that is not in its own Docker network (network namespace). This means that communication between the Postgres and pgAdmin instances is conditioned on the existence of a common network for their instances – so that communication occurs effectively. Therefore, it is necessary to create a Docker network (bridge) for Postgres and pgAdmin.
 
-> **NOTE: The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+> **NOTE:. The Docker commands listed throughout this Postgres Installation section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
 
 ### Creating the Docker Network
 
@@ -458,11 +458,11 @@ To access your Postgres instance, follow these steps:
 </div>
 <br>
 
-> **Note: In case of first access or configuring a new server, click to add a new server and fill in the required fields to set up your Postgres instance.**
+> **NOTE:. In case of first access or configuring a new server, click to add a new server and fill in the required fields to set up your Postgres instance.**
 
 ## Installation and Uninstallation Scripts for Postgres and pgAdmin Instances
 
-> **Note: The CLI commands listed throughout this section on Installation and Uninstallation Scripts for Postgres and pgAdmin instances work the same way on Linux and macOS, as both are Unix-based. On Windows, it is recommended to use WSL 2 or Git Bash to ensure compatibility. If using PowerShell or the Command Prompt (cmd), some commands may have syntax differences or specific equivalents.**
+> **NOTE:. The CLI commands listed throughout this section on Installation and Uninstallation Scripts for Postgres and pgAdmin instances work the same way on Linux and macOS, as both are Unix-based. On Windows, it is recommended to use WSL 2 or Git Bash to ensure compatibility. If using PowerShell or the Command Prompt (cmd), some commands may have syntax differences or specific equivalents.**
 
 To simplify the installation and/or uninstallation process of containers, volume, network, and images for Docker instances of Postgres and pgAdmin, this repository provides shell scripts related to these actions. You can access them through the badges below:
 
@@ -492,7 +492,7 @@ Follow the instructions below for the [Installation Action](#installation-action
     ./scripts/postgres_and_pgadmin_installation.sh
     ```
 
-> **NOTE: In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
+> **NOTE:. In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
 
 ### Uninstallation Action
 
@@ -516,11 +516,11 @@ Follow the instructions below for the [Installation Action](#installation-action
     ./scripts/postgres_and_pgadmin_uninstallation.sh
     ```
 
-> **NOTE: In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
+> **NOTE:. In case of execution failure, I recommend checking the script execution permissions for the user and group of the operating system in use.**
 
 ## Maintaining Docker Containers, Volume, Network, and Images
 
-> **NOTE: The Docker commands listed throughout this Maintaining Docker Containers, Volume, Network, and Images section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
+> **NOTE:. The Docker commands listed throughout this Maintaining Docker Containers, Volume, Network, and Images section work the same way on Linux, Windows and macOS, provided that Docker Desktop is installed on Windows and macOS. On Linux, Docker runs natively, while on Windows, it is recommended to enable WSL 2 for better compatibility. Once the environment is set up, the commands can be used in the terminal (Linux/macOS) or PowerShell (Windows) without any differences.**
 
 In this section, you will find the main commands used for maintenance in Docker related to previously installed instances – Postgres and pgAdmin. These maintenance actions refer to:
 
@@ -537,7 +537,7 @@ In this section, you will find the main commands used for maintenance in Docker 
 
 ### Identifying Containers, Volumes, Networks, and Images
 
-It is necessary, before performing any maintenance operation—whether on a container, volume, network, or image—to identify and obtain the ID or name of the targeted entity.
+It is necessary, before performing any maintenance operation–whether on a container, volume, network, or image–to identify and obtain the ID or name of the targeted entity.
 
 > Ensure that any maintenance operation is performed on the correct entity. Identification of the entity is crucial for this purpose.
 
@@ -649,9 +649,9 @@ docker rm [ctn_id ou ctn_name]
 
 where `ctn_id` and `ctn_name` represent, respectively, the Docker container's ID and name related to the instance; use one of the parameters to perform the action.
 
-> **NOTE: Deleting a container is a permanent action!**
+> **NOTE:. Deleting a container is a permanent action!**
 
-> **NOTE: It is not possible to delete a running container. You must stop the container before performing the action.**
+> **NOTE:. It is not possible to delete a running container. You must stop the container before performing the action.**
 
 Considering the Postgres container example shown at the end of the section [Creating the Postgres Instance](#creating-the-postgres-instance), remove it using the command:
 
@@ -677,11 +677,11 @@ docker volume rm [volume_name]
 
 where `volume_name` represents the name of the data volume associated with the previously removed Docker container instance.
 
-> **NOTE: Deleting a volume is a permanent action!**
+> **NOTE:. Deleting a volume is a permanent action!**
 
-> **NOTE: It is not possible to delete a data volume that is associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
+> **NOTE:. It is not possible to delete a data volume that is associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
 
-> **NOTE: If you intend to persist the data using a new container, do not delete the existing data volume!**
+> **NOTE:. If you intend to persist the data using a new container, do not delete the existing data volume!**
 
 Considering the Postgres container example shown at the end of the section [Creating the Postgres Instance](#creating-the-postgres-instance), delete its data volume using the command:
 
@@ -689,7 +689,7 @@ Considering the Postgres container example shown at the end of the section [Crea
 docker volume rm pg_volume_data
 ```
 
-> **NOTE: The pgAdmin instance, as detailed in the section [Creating the pgAdmin Instance](#creating-the-pgadmin-instance), does not have an associated data volume.**
+> **NOTE:. The pgAdmin instance, as detailed in the section [Creating the pgAdmin Instance](#creating-the-pgadmin-instance), does not have an associated data volume.**
 
 By accessing the Docker volume repository, confirm the deletion of the data volume for your Postgres instance.
 
@@ -703,9 +703,9 @@ docker network rm [net_id ou net_name]
 
 where `net_id` and `net_name` represent, respectively, the ID and name of the Docker network associated with the containers of the previously removed instances (use one of the parameters to perform the action).
 
-> **NOTE: Deleting a network is a permanent action!**
+> **NOTE:. Deleting a network is a permanent action!**
 
-> **NOTE: It is not possible to delete a network associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
+> **NOTE:. It is not possible to delete a network associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
 
 Considering the Docker network example shown in the section [Creating the Docker Network](#creating-the-docker-network), delete it using the command:
 
@@ -725,9 +725,9 @@ docker rmi [img_id ou img_name]:[version]
 
 where `img_id` and `img_name` represent, respectively, the ID and name of the Docker image associated with the previously removed container instance (use one of the parameters to perform the action); and `version` represents the version of the Docker image used.
 
-> **NOTE: Deleting an image is a permanent action!**
+> **NOTE:. Deleting an image is a permanent action!**
 
-> **NOTE: It is not possible to delete an image associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
+> **NOTE:. It is not possible to delete an image associated with an existing container, whether it is active or inactive. You must remove the container first to perform this action.**
 
 Considering the Postgres image downloaded in the section [Downloading the Official Postgres Image](#downloading-the-official-postgres-image), delete it using the command:
 
