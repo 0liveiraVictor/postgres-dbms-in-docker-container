@@ -67,7 +67,7 @@ In this tutorial, you will learn how to install a Postgres instance in an enviro
 
 A Docker image is a lightweight package that contains everything needed to run a software application. The image package is a set of packaged files, organized into layers, that represent the filesystem required to execute an application.
 
-To run an application within the Docker context, an image must be used to build the instance in which the application will run; this instance is called a 'container.' Therefore, by definition, every Docker container has a base image that created it.
+To run an application within the Docker context, an image must be used to build the instance in which the application will run; this instance is called a 'container'. Therefore, by definition, every Docker container has a base image that created it.
 
 Docker images can be defined in a file called `Dockerfile`. An image can be built entirely from scratch or use other Docker images as a base for constructing its own. In general, the main characteristics of an image are:
 
@@ -80,15 +80,15 @@ To facilitate sharing and reusing images, they can be stored in remote repositor
 
 ### What is a Docker Container?
 
-A Docker container is a lightweight, isolated software unit that bundles an application along with all its necessary dependencies (such as libraries, configuration files, and binaries) to ensure consistent execution across any environment. From a Docker image, a container for the desired application can be built.
+A Docker container is a lightweight and isolated software unit that bundles an application along with all its necessary dependencies (such as libraries, configuration files and binaries) to ensure consistent execution across any environment. From a Docker image, a container for the desired application can be built.
 
 The main characteristics of a container are:
 
-- **Isolation**: The container’s filesystem, processes, networks, dependencies, and configurations are specific to the application. This infrastructure is isolated from the host operating system and other containers;  
-- **Portability**: A container can run on any host, regardless of its underlying operating system, as long as the host is compatible with the Docker platform;  
-- **Efficiency**: Unlike virtual machines, containers do not include an operating system within their internal structure. They operate by sharing the same kernel as the host operating system, making them lightweight and fast;  
-- **Lifecycle**: A container can be created, started, stopped, restarted, and removed. It is considered a "running instance" of a Docker image;  
-- **Immutability**: Any internal modifications made to the container (e.g., installing a specific dependency) will be lost when the container is restarted – unless they are saved in a data volume or redefined in its Docker image. For this reason, containers are considered ephemeral and immutable.  
+- **Isolation**: the container’s filesystem, processes, networks, dependencies, and configurations are specific to the application. This infrastructure is isolated from the host operating system and other containers;  
+- **Portability**: a container can run on any host, regardless of its underlying operating system, as long as the host is compatible with the Docker platform;  
+- **Efficiency**: unlike virtual machines, containers do not include an operating system within their internal structure. They operate by sharing the same kernel as the host operating system, making them lightweight and fast;  
+- **Lifecycle**: a container can be created, started, stopped, restarted and removed. It is considered a "running instance" of a Docker image;
+- **Immutability**: any internal modifications made to the container (e.g., installing a specific dependency) will be lost when the container is restarted – unless they are saved in a data volume or redefined in its Docker image. For this reason, containers are considered ephemeral and immutable.  
 
 ### What is a Docker Volume?
 
@@ -98,26 +98,26 @@ In practice, the goal is to create copies of the data stored within the containe
 
 In summary, creating volumes means establishing local data repositories for containers, managed by Docker. The main characteristics of a Docker volume are:
 
-- **Persistence**: Data in a volume is not deleted when the container is removed;
-- **Sharing**: Enables file exchange between containers;
-- **Performance**: Volumes managed by Docker’s volume repository are faster and more efficient than [bind mounts](https://docs.docker.com/engine/storage/bind-mounts/) (directly mounting host filesystem folders);
-- **Portability**: Since volumes are managed by Docker, they make it easier to transfer data between environments.
+- **Persistence**: data in a volume is not deleted when the container is removed;
+- **Sharing**: enables file exchange between containers;
+- **Performance**: volumes managed by Docker’s volume repository are faster and more efficient than [bind mounts](https://docs.docker.com/engine/storage/bind-mounts/) (directly mounting host filesystem folders);
+- **Portability**: since volumes are managed by Docker, they make it easier to transfer data between environments.
 
 ### What is a Docker Network?
 
 A Docker network is a component that enables communication between containers and between containers and the host. In Docker, since each container is an independent and isolated instance, they cannot communicate unless they are configured within a common network.
 
-Docker networks are managed by Docker itself, providing flexibility and security for applications while ensuring safe, efficient, and controlled communication.
+Docker networks are managed by Docker itself, providing flexibility and security for applications while ensuring safe, efficient and controlled communication.
 
 The main characteristics of a Docker network are:
 
 - **Isolation**: Docker networks allow containers to be isolated within their network configurations, ensuring that only containers belonging to the same network can communicate with each other;  
-- **Simplified Connectivity**: Containers connected to the same network can communicate directly using the container name;  
+- **Simplified Connectivity**: containers connected to the same network can communicate directly using the container name;  
 - **Support**: Docker networks offer multiple network driver options to accommodate different requirements.
 
 ### The DockerHub Repository
 
-DockerHub is a centralized cloud platform used as a remote repository for Docker images (similar to how GitHub is used for source code storage). It is popular and widely used for searching, storing, and distributing Docker images developed by individuals, teams, or organizations.
+DockerHub is a centralized cloud platform used as a remote repository for Docker images (similar to how GitHub is used for source code storage). It is popular and widely used for searching, storing and distributing Docker images developed by individuals, teams or organizations.
 
 > For more information, visit [DockerHub](https://hub.docker.com/).
 
