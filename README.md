@@ -131,11 +131,11 @@ Before answering this question, let's first analyze the issue of direct installa
 
 #### What potential issues could arise from installing Postgres directly on a host environment?
 
-- **Risk of Conflicts**: Updating or switching between Postgres versions may not be an easy task. Managing different versions of the same DBMS within the same environment can lead to conflicts, both in configurations and in installing dependencies;
+- **Risk of Conflicts**: updating or switching between Postgres versions may not be an easy task. Managing different versions of the same DBMS within the same environment can lead to conflicts, both in configurations and in installing dependencies;
 
-- **Uninstallation**: Configuration files and dependencies for running the Postgres DBMS are installed in the host environment's filesystem. If you're not familiar with the locations of Postgres installation and configuration on the host, and if multiple versions of the DBMS exist, uninstallation will require effort and prior knowledge of the environment;
+- **Uninstallation**: configuration files and dependencies for running the Postgres DBMS are installed in the host environment's filesystem. If you're not familiar with the locations of Postgres installation and configuration on the host, and if multiple versions of the DBMS exist, uninstallation will require effort and prior knowledge of the environment;
 
-- **Portability**: Any configuration made in a host environment will not be portable if you change machines. Essentially, the entire configuration process will need to be redone in a new host environment;
+- **Portability**: any configuration made in a host environment will not be portable if you change machines. Essentially, the entire configuration process will need to be redone in a new host environment;
 
 In the context where the Postgres DBMS is installed via Docker, these issues no longer exist, as the DBMS is instantiated within a container – which has its own filesystem – along with its dependencies. This way, all DBMS configurations are isolated from the host environment. The figure below illustrates the architectural difference in how a virtual machine works compared to a Docker container:
 
@@ -148,13 +148,13 @@ In the context where the Postgres DBMS is installed via Docker, these issues no 
 
 - **Isolation**: Postgres running in a container is isolated from the host operating system; its configuration is defined in the container's filesystem (independent of the host environment's filesystem); there are no version conflicts or unwanted changes to the host system because the DBMS is defined in the container's filesystem (separate from the host); it is possible to run multiple Postgres instances with different versions or configurations in parallel – each defined in a separate container;
 
-- **Configuration**: The installation of Postgres is simple and straightforward, and with a single command, you can configure the instance and install the necessary DBMS libraries without any manual intervention; conversely, the removal of the container is also straightforward, allowing you to completely remove the Postgres instance and its dependencies without leaving any residue on the system;
+- **Configuration**: the installation of Postgres is simple and straightforward, and with a single command, you can configure the instance and install the necessary DBMS libraries without any manual intervention; conversely, the removal of the container is also straightforward, allowing you to completely remove the Postgres instance and its dependencies without leaving any residue on the system;
 
-- **Compatibility Testing**: Due to the ability to easily run different versions of Postgres instances, this allows you to test compatibility with a specific application;
+- **Compatibility Testing**: due to the ability to easily run different versions of Postgres instances, this allows you to test compatibility with a specific application;
 
-- **Portability**: Regardless of the environment in which the container resides, the same container (same structure) will run, as long as the system has Docker installed and uses a Docker image of the same version. This ensures consistency across development, testing, and production environments;
+- **Portability**: regardless of the environment in which the container resides, the same container (same structure) will run, as long as the system has Docker installed and uses a Docker image of the same version. This ensures consistency across development, testing, and production environments;
 
-- **Reproducibility**: With the assurance of consistency between environments that use Docker, you can reproduce the same activity conditions for any Postgres user in a container; if it works in one host environment, it will work in another distinct environment; this eliminates the saying: "it works on my machine!".
+- **Reproducibility**: with the assurance of consistency between environments that use Docker, you can reproduce the same activity conditions for any Postgres user in a container; if it works in one host environment, it will work in another distinct environment; this eliminates the saying: "it works on my machine!".
 
 ## Postgres Installation
 
